@@ -11,23 +11,39 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_menu")
+public class OrderItem extends BaseEntity {
+
     private Menu menu;
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_order")
+
     private Order order;
     @Column (name = "number_of_servings")
-    private int numberOfServings;
+    private Integer numberOfServings;
 
-    public OrderItem(Menu menu, Order order, int numberOfServings) {
-        this.menu = menu;
-        this.order = order;
-        this.numberOfServings = numberOfServings;
+    @ManyToOne
+    @JoinColumn (name = "menu_id")
+    public Menu getMenu() {
+        return menu;
     }
 
-    public OrderItem convertToDto() {
-        return new OrderItem(menu.convertToDto(), order.convertToDto(), numberOfServings);
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    @ManyToOne
+    @JoinColumn (name = "order_id")
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Integer getNumberOfServings() {
+        return numberOfServings;
+    }
+
+    public void setNumberOfServings(Integer numberOfServings) {
+        this.numberOfServings = numberOfServings;
     }
 }

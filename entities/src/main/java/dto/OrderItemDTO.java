@@ -17,16 +17,27 @@ public class OrderItemDTO {
     private Order order;
     private int numberOfServings;
 
-    @Override
-    public String toString() {
-        return "OrderItemDTO{" +
-                "menu=" + menu +
-                ", order=" + order +
-                ", numberOfServings=" + numberOfServings +
-                '}';
+    public Menu getMenu() {
+        return menu;
     }
 
-    public OrderItem convertToEntity() {
-        return new OrderItem(menu, order, numberOfServings);
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public int getNumberOfServings() {
+        return numberOfServings;
+    }
+
+    public void setNumberOfServings(int numberOfServings) {
+        this.numberOfServings = numberOfServings;
     }
 }

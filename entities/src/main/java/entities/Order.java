@@ -3,9 +3,6 @@ package entities;
 import lombok.*;
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,46 +11,39 @@ import java.util.GregorianCalendar;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "order")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id_order")
-    private Long id;
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_user")
+@Table(name = "order_table")
+public class Order extends BaseEntity {
     private User user;
-    @Column (name = "order_type")
+    @Column(name = "order_type")
     private String orderType;
-    @Column (name = "order_date")
-    private GregorianCalendar orderDate;
+    @Column(name = "order_date")
+    private Date orderDate;
 
-    @Override
-    public String toString() {
-        return "Order{"
-                + "id="
-                + id
-                + ", user="
-                + user
-                + ", orderType='"
-                + orderType
-                + '\''
-                + ", orderDate="
-                + orderDate.get(Calendar.DATE)
-                + "."
-                + orderDate.get(Calendar.MONTH)
-                + "."
-                + orderDate.get(Calendar.YEAR)
-                + "."
-                + orderDate.get(Calendar.HOUR_OF_DAY)
-                + ":"
-                + orderDate.get(Calendar.MINUTE)
-                + ":"
-                + orderDate.get(Calendar.SECOND)
-                + '}';
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser() {
+        return user;
     }
 
-    public Order convertToDto() {
-        return new Order(id, user.convertToDto(), orderType, orderDate);
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }
+
+

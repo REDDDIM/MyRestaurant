@@ -19,19 +19,51 @@ public class MenuDTO {
     private String unit;
     private double price;
 
-    @Override
-    public String toString() {
-        return "MenuItemDTO{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", ingredients='" + ingredients + '\'' +
-                ", weight=" + weight +
-                ", unit='" + unit + '\'' +
-                ", price=" + price +
-                '}';
+    public Long getId() {
+        return id;
     }
 
-    public Menu convertToEntity() throws ParseException {
-        return new Menu(id, title, ingredients, weight, unit, price);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

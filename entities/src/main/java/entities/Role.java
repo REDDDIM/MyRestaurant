@@ -1,30 +1,32 @@
 package entities;
 
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public enum Role {
-    ADMIN("admin"),
-    OPERATOR("operator"),
-    COURIER("courier"),
-    СLIENT("client");
+@Entity
+@Table(name = "role")
+public class Role extends BaseEntity {
 
-    Role(String name) {
-        this.name = name;
-    }
     private String name;
 
+    private String description;
+
+    @Column
     public String getName() {
         return name;
     }
 
-    public static Role getRoleByName(String name){
-        switch(name) {
-            case "admin" : return Role.ADMIN;
-            case "operator" : return Role.OPERATOR;
-            case "courier" : return Role.COURIER;
-            case "client" : return Role.СLIENT;
-            default: break;
-        }
-        return null;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

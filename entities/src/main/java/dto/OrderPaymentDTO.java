@@ -18,18 +18,43 @@ public class OrderPaymentDTO {
     private double cash;
     private double lease;
 
-    @Override
-    public String toString() {
-        return "OrderPaymentDTO{" +
-                "id=" + id +
-                ", order=" + order +
-                ", totalAmount=" + totalAmount +
-                ", cash=" + cash +
-                ", lease=" + lease +
-                '}';
+    public Long getId() {
+        return id;
     }
 
-    public OrderPayment convertToEntity() {
-        return new OrderPayment(id, order, totalAmount, cash, lease);
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public double getCash() {
+        return cash;
+    }
+
+    public void setCash(double cash) {
+        this.cash = cash;
+    }
+
+    public double getLease() {
+        return lease;
+    }
+
+    public void setLease(double lease) {
+        this.lease = lease;
     }
 }

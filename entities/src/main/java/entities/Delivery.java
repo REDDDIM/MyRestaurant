@@ -1,11 +1,11 @@
 package entities;
 
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.List;
 import javax.persistence.*;
 
 @AllArgsConstructor
@@ -16,24 +16,48 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table (name = "delivery")
-public class Delivery {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id_delivery")
-    private Long id;
-    @Column(name = "id_order")
-    private Long idOrder;
+public class Delivery extends BaseEntity {
+
+
+    private List<Order> order;
     @Column(name = "delivery_date")
     private Date deliveryDate;
     @Column(name = "time_of_delivery")
     private Time timeOfDelivery;
     @Column(name = "cost_of_delivery")
-    private double costOfDelivery;
+    private BigDecimal costOfDelivery;
 
-    public Delivery convertToDto() {
-        DateFormat dateFormat = new SimpleDateFormat(" День: dd Месяц: MM Год: yyyy \nВремя: hh:mm:ss");
-        String data = deliveryDate.get(Calendar.DATE) + "." + deliveryDate.get(Calendar.MONTH) + "." + deliveryDate.get(Calendar.YEAR);
-        String time = timeOfDelivery.get(Calendar.HOUR) + ":" + timeOfDelivery.get(Calendar.MINUTE)  + ":" +  timeOfDelivery.get(Calendar.SECOND);
-        return new Delivery(id, deliveryDate, timeOfDelivery, costOfDelivery);
+    @OneToMany
+    public List<Order> getOrder() {
+        return order;
     }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Time getTimeOfDelivery() {
+        return timeOfDelivery;
+    }
+
+    public void setTimeOfDelivery(Time timeOfDelivery) {
+        this.timeOfDelivery = timeOfDelivery;
+    }
+
+    public BigDecimal getCostOfDelivery() {
+        return costOfDelivery;
+    }
+
+    public void setCostOfDelivery(BigDecimal costOfDelivery) {
+        this.costOfDelivery = costOfDelivery;
+    }
+
 }

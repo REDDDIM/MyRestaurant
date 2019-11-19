@@ -8,12 +8,9 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id_user")
-    private Long id;
-    @Column (name = "role")
+public class User extends BaseEntity {
+
+
     private Role role;
     @Column (name = "name")
     private String name;
@@ -28,7 +25,61 @@ public class User {
     @Column (name = "phone_number")
     private Long phoneNumber;
 
-    public User convertToDto() {
-        return new User(id, role, name, surname, login, password, address, phoneNumber);
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

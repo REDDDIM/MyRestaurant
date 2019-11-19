@@ -2,6 +2,7 @@ package entities;
 
 import lombok.*;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,22 +12,46 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "order_payment")
-public class OrderPayment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id_order_payment")
-    private Long id;
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (name = "id_order")
+public class OrderPayment extends BaseEntity {
+
     private Order order;
     @Column (name = "total_amount")
-    private double totalAmount;
+    private BigDecimal totalAmount;
     @Column (name = "cash")
-    private double cash;
+    private BigDecimal cash;
     @Column (name = "lease")
-    private double lease;
+    private BigDecimal lease;
 
-    public OrderPayment convertToDto() {
-        return new OrderPayment(id, order.convertToDto(), totalAmount, cash, lease);
+    @Column (name = "order_id")
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public BigDecimal getCash() {
+        return cash;
+    }
+
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
+
+    public BigDecimal getLease() {
+        return lease;
+    }
+
+    public void setLease(BigDecimal lease) {
+        this.lease = lease;
     }
 }
