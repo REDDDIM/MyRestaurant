@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class OrderItem extends BaseEntity {
 
     private Menu menu;
-
     private Order order;
     @Column (name = "number_of_servings")
     private Integer numberOfServings;

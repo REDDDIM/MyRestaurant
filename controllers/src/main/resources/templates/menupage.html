@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8"/>
+<title>Menu page</title>
+<head>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> Id </th>
+        <th> Title </th>
+        <th> Price </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${menu.empty}">
+        <td colspan="2"> No menu available </td>
+    </tr>
+    <tr th:each="dish : ${menu}">
+        <td><span th:text="${dish.id}"> Id </span></td>
+        <td><span th:text="${dish.title}"> Title </span></td>
+        <td><span th:text="${dish.price}"> Price </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

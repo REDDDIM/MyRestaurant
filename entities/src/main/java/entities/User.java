@@ -25,6 +25,14 @@ public class User extends BaseEntity {
     @Column (name = "phone_number")
     private Long phoneNumber;
 
+    public User(String name, String surname, String login, String password, Long phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
     @ManyToOne
     @JoinColumn(name="role_id")
     public Role getRole() {
