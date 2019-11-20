@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import services.MenuService;
 import services.UserService;
 
 @Controller
@@ -13,6 +14,9 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MenuService menuService;
 
     @GetMapping({"/", "/signin"})
     public String getSignInPage(){
@@ -46,5 +50,11 @@ public class MainController {
                  pwd,
                  phoneNumber, "client");
         return "signin";
+    }
+
+    @GetMapping("/getadminmenupage")
+    public String getAdminMenuPage(Model model){
+        model.addAttribute("menu", menuService.getAllDtos());
+        return "adminmenupage";
     }
 }

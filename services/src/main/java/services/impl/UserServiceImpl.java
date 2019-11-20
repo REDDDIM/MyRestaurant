@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
                 List<MenuDto> menuDtoList = new ArrayList<>();
                 menuRepository.findAll().forEach(m ->menuDtoList.add(m.convertToDto()));
                 model.addAttribute("menu", menuDtoList);
-                result = "menupage";
+                result = "clientmenupage";
                 break;
             case ("admin") :
                 result = "adminpage";
