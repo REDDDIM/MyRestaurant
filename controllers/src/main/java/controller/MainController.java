@@ -44,7 +44,7 @@ public class MainController {
                  lastName,
                  login,
                  pwd,
-                 phoneNumber);
+                 phoneNumber, "client");
         return "signin";
     }
 }

@@ -1,8 +1,10 @@
 package services.impl;
 
 import dao.repository.MenuRepository;
+import dao.repository.RoleRepository;
 import dao.repository.UserRepository;
 import dto.MenuDto;
+import entities.Role;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,15 +22,23 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     MenuRepository menuRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+
     @Override
     public User load(Long id) {
         return userRepository.getOne(id);
     }
 
     @Override
-    public User save(String firstName, String lastName, String login, String pwd, String phoneNumber) {
-        return userRepository.save(new User(firstName, lastName, login, pwd, Long.parseLong(phoneNumber)));
-
+    public User save(String firstName, String lastName, String login, String pwd, String phoneNumber, String roleName) {
+        if (roleName != null && !roleName.isEmpty()){
+            Role role = roleRepository.getByName(roleName);
+            return userRepository.save(new User(firstName, lastName, login, pwd, Long.parseLong(phoneNumber), role));
+        }
+        else return userRepository.save(new User(firstName, lastName, login, pwd, Long.parseLong(phoneNumber), null));
     }
 
     @Override
