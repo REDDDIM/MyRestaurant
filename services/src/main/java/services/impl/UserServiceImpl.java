@@ -2,11 +2,15 @@ package services.impl;
 
 import dao.repository.MenuRepository;
 import dao.repository.UserRepository;
+import dto.MenuDto;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import services.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,7 +37,9 @@ public class UserServiceImpl implements UserService {
         String result = new String();
         switch (user.getRole().getName()){
             case ("client") :
-                model.addAttribute("menu", menuRepository.findAll());
+                List<MenuDto> menuDtoList = new ArrayList<>();
+                menuRepository.findAll().forEach(m ->menuDtoList.add(m.convertToDto()));
+                model.addAttribute("menu", menuDtoList);
                 result = "menupage";
                 break;
             case ("admin") :

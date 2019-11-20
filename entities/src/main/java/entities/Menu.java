@@ -1,18 +1,12 @@
 package entities;
 
-import lombok.*;
+import dto.MenuDto;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @Entity
 @Table(name = "menu")
-public class Menu extends BaseEntity {
+public class Menu extends BaseEntity<MenuDto> {
 
     @Column (name = "title")
     private String title;

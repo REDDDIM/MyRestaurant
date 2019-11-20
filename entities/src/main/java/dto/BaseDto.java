@@ -1,19 +1,13 @@
-package entities;
+package dto;
 
-import dto.BaseDto;
+import entities.BaseEntity;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
-@MappedSuperclass
-public class BaseEntity<D extends BaseDto> implements Serializable {
-
+public class BaseDto<E extends BaseEntity> {
     private Long id;
 
-    @Id
-    @GeneratedValue
     public Long getId() {
         return id;
     }
@@ -27,9 +21,8 @@ public class BaseEntity<D extends BaseDto> implements Serializable {
         return getClass().getName()+"{id="+getId()+"}";
     }
 
-    public D convertToDto(){
-        return new ModelMapper().map(this, (Class<D>) ((ParameterizedType) getClass()
+    public E convertToEntity(){
+        return new ModelMapper().map(this, (Class<E>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0]);
     }
-
 }
