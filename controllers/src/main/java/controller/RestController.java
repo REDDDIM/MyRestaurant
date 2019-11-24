@@ -22,4 +22,9 @@ public class RestController {
                                   @RequestParam("price") String price) throws IOException {
         return menuService.saveAndReturnAsJson(title, ingredients, weight, unit, price);
     }
+
+    @RequestMapping(value = "/authorize")
+    public String authorize() throws IOException {
+        return "kek";
+    }
 }
