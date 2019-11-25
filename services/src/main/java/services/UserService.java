@@ -9,6 +9,7 @@ public interface UserService {
               String lastName,
               String login,
               String pwd,
+              String address,
               String phoneNumber,
               String role);
     String authorizeByLoginAndPassword(String login, String pwd, Model model);

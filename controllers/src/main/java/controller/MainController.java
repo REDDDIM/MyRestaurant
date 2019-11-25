@@ -37,7 +37,7 @@ public class MainController {
     public String getSignUp(){
         return "signup";
     }
-    @PostMapping("/registration")
+    /*@PostMapping("/registration")
     public String registrationUser(@RequestParam("firstName") String firstName,
                                    @RequestParam("lastName") String lastName,
                                    @RequestParam("login") String login,
@@ -50,7 +50,7 @@ public class MainController {
                  pwd,
                  phoneNumber, "client");
         return "signin";
-    }
+    }*/
 
     @GetMapping("/getadminmenupage")
     public String getAdminMenuPage(Model model){

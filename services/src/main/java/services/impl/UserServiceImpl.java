@@ -33,12 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(String firstName, String lastName, String login, String pwd, String phoneNumber, String roleName) {
+    public User save(String firstName, String lastName, String login, String pwd, String address, String phoneNumber, String roleName) {
+        Role role = null;
         if (roleName != null && !roleName.isEmpty()){
-            Role role = roleRepository.getByName(roleName);
-            return userRepository.save(new User(firstName, lastName, login, pwd, Long.parseLong(phoneNumber), role));
+            role = roleRepository.getByName(roleName);
         }
-        else return userRepository.save(new User(firstName, lastName, login, pwd, Long.parseLong(phoneNumber), null));
+        User user = new User(firstName, lastName, login, pwd, address, Long.parseLong(phoneNumber), role);
+        return userRepository.save(user);
     }
 
     @Override
