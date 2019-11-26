@@ -13,4 +13,5 @@ public interface UserService {
               String phoneNumber,
               String role);
     User authorizeByLoginAndPassword(String login, String pwd);
+    User findByUsername(String login);
 }

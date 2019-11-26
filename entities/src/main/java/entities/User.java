@@ -2,6 +2,8 @@ package entities;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,7 +13,7 @@ import javax.persistence.*;
 public class User extends BaseEntity {
 
 
-    private Role role;
+    private List<Role> roles;
     @Column (name = "name")
     private String name;
     @Column (name = "surname")
@@ -32,18 +34,17 @@ public class User extends BaseEntity {
         this.password = password;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.role = role;
+        this.roles = Arrays.asList(role);
     }
 
-
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    public Role getRole() {
-        return role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public String getName() {

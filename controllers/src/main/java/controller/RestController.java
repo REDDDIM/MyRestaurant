@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import entities.User;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -19,6 +20,9 @@ import java.io.IOException;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
+
+    @Autowired
+    StrongPasswordEncryptor strongPasswordEncryptor;
 
     @Autowired
     private MenuService menuService;
@@ -40,15 +44,15 @@ public class RestController {
     }
 
     @RequestMapping(value = "/registration")
-    public ResponseEntity registerNewUser(@RequestParam(value = "name", required = false) String name,
-                                       @RequestParam(value = "surname", required = false) String surname,
-                                       @RequestParam(value = "login", required = false) String login,
-                                        @RequestParam(value = "address", required = false) String address,
-                                        @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-                                       @RequestParam(value = "password", required = false) String password){
+    public ResponseEntity registerNewUser(@RequestParam(value = "name") String name,
+                                       @RequestParam(value = "surname") String surname,
+                                       @RequestParam(value = "login") String login,
+                                        @RequestParam(value = "address") String address,
+                                        @RequestParam(value = "phoneNumber") String phoneNumber,
+                                       @RequestParam(value = "password") String password){
 
         try {
-            User user =  userService.save(name, surname, login, password, address, phoneNumber, "client");
+            User user =  userService.save(name, surname, login, strongPasswordEncryptor.encryptPassword(password), address, phoneNumber, "client");
             return new ResponseEntity("user registration completed", HttpStatus.OK);
         }
         catch (Exception e){
