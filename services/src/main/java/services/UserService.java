@@ -12,5 +12,5 @@ public interface UserService {
               String address,
               String phoneNumber,
               String role);
-    String authorizeByLoginAndPassword(String login, String pwd, Model model);
+    User authorizeByLoginAndPassword(String login, String pwd);
 }

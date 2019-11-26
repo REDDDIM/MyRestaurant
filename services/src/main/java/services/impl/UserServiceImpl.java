@@ -43,19 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String authorizeByLoginAndPassword(String login, String pwd, Model model) {
-        User user = userRepository.getByLoginAndPwd(login, pwd);
-        String result = new String();
-        switch (user.getRole().getName()){
-            case ("client") :
-                List<MenuDto> menuDtoList = new ArrayList<>();
-                menuRepository.findAll().forEach(m ->menuDtoList.add(m.convertToDto()));
-                model.addAttribute("menu", menuDtoList);
-                result = "clientmenupage";
-                break;
-            case ("admin") :
-                result = "adminpage";
-        }
-        return result;
+    public User authorizeByLoginAndPassword(String login, String pwd) {
+        return userRepository.getByLoginAndPwd(login, pwd);
     }
 }

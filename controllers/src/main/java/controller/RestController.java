@@ -1,7 +1,10 @@
 package controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import entities.User;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,16 @@ public class RestController {
     private UserService userService;
 
     @RequestMapping(value = "/authorize")
-    public String authorize() throws IOException {
-        return "kek";
+    public ResponseEntity authorize(@RequestParam("login") String login,
+                            @RequestParam("password") String password) {
+        try{
+            User user = userService.authorizeByLoginAndPassword(login, password);
+            if (user !=null && user.getId() != null)  return new ResponseEntity(user, HttpStatus.OK);
+            else return new ResponseEntity("User not found!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch (Exception e) {
+            return new ResponseEntity("User not found!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(value = "/registration")
@@ -35,8 +46,23 @@ public class RestController {
                                         @RequestParam(value = "address", required = false) String address,
                                         @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
                                        @RequestParam(value = "password", required = false) String password){
-        User user =  userService.save(name, surname, login, password, address, phoneNumber, "client");
-        if (user.getId() != null) return new ResponseEntity("user registration completed", HttpStatus.OK);
-        else return new ResponseEntity("user id is null", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        try {
+            User user =  userService.save(name, surname, login, password, address, phoneNumber, "client");
+            return new ResponseEntity("user registration completed", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/allmenu")
+    public ResponseEntity getAllMenu(){
+        try {
+            return new ResponseEntity(menuService.getAllDtos(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

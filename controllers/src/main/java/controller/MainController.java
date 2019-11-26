@@ -23,10 +23,10 @@ public class MainController {
         return "signin";
     }
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public String login(Model model, @RequestParam("login") String login, @RequestParam("pwd") String pwd){
         return userService.authorizeByLoginAndPassword(login, pwd, model);
-    }
+    }*/
 
     @GetMapping("/error")
     public String error(){
