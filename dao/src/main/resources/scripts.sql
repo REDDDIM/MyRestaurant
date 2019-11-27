@@ -23,3 +23,4 @@ INSERT INTO public.role_users(
 INSERT INTO public.role_users(
 	role_id, users_id)
 	VALUES (2, 4);
+select setval('hibernate_sequence', 5);
