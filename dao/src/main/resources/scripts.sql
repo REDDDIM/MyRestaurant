@@ -24,3 +24,4 @@ INSERT INTO public.role_users(
 	role_id, users_id)
 	VALUES (2, 4);
 select setval('hibernate_sequence', 5);
+ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);
