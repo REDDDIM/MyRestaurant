@@ -23,5 +23,8 @@ INSERT INTO public.role_users(
 INSERT INTO public.role_users(
 	role_id, users_id)
 	VALUES (2, 4);
-select setval('hibernate_sequence', 5);
+INSERT INTO public.menu(
+	id, ingredients, price, title, unit, weight)
+	VALUES (5, 'some ingredients', 150.00, 'salad', 1, 100);
+select setval('hibernate_sequence', 6);
 ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);
