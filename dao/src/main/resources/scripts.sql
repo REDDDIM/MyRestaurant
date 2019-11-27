@@ -6,23 +6,11 @@ INSERT INTO public.role(
 	id, description, name)
 	VALUES (2, 'Клиент', 'ROLE_client');
 INSERT INTO public.users(
-	id, address, login, name, password, phone_number, surname)
-	VALUES (3, 'admin_address', 'admin', 'admin_name', 'v/kxXM/rPPfbR0h6EYt6obU1KiBrUzMcMQk+agL73evWVNelld4Oic1e5WVNl3L0', 0123456789, 'admin_surname');
+	id, address, login, name, password, phone_number, surname, role_id)
+	VALUES (3, 'admin_address', 'admin', 'admin_name', 'v/kxXM/rPPfbR0h6EYt6obU1KiBrUzMcMQk+agL73evWVNelld4Oic1e5WVNl3L0', 0123456789, 'admin_surname', 1);
 INSERT INTO public.users(
-	id, address, login, name, password, phone_number, surname)
-	VALUES (4, 'client_address', 'client', 'client_name', 'OFDe6NPf28BWIKXLdPBUIDY8MeoLDLtosTFCgfB89GW+j0btbEQXGViFz0pVX/iW', 9876543210, 'client_surname');
-INSERT INTO public.users_roles(
-	user_id, roles_id)
-	VALUES (3, 1);
-INSERT INTO public.users_roles(
-	user_id, roles_id)
-	VALUES (4, 2);
-INSERT INTO public.role_users(
-	role_id, users_id)
-	VALUES (1, 3);
-INSERT INTO public.role_users(
-	role_id, users_id)
-	VALUES (2, 4);
+	id, address, login, name, password, phone_number, surname, role_id)
+	VALUES (4, 'client_address', 'client', 'client_name', 'OFDe6NPf28BWIKXLdPBUIDY8MeoLDLtosTFCgfB89GW+j0btbEQXGViFz0pVX/iW', 9876543210, 'client_surname', 2);
 INSERT INTO public.menu(
 	id, ingredients, price, title, unit, weight)
 	VALUES (5, 'some ingredients', 150.00, 'salad', 1, 100);

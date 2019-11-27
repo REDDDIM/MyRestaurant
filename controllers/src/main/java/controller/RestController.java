@@ -35,12 +35,12 @@ public class RestController {
     public ResponseEntity login(@RequestParam("login") String login,
                             @RequestParam("password") String password) {
         try{
-            User user = userService.authorizeByLoginAndPassword(login, encryptionService.encryptString(password));
-            if (user !=null && user.getId() != null)  return new ResponseEntity(user, HttpStatus.OK);
-            else return new ResponseEntity("User not found!", HttpStatus.INTERNAL_SERVER_ERROR);
+            User user = userService.authorizeByLoginAndPassword(login, password);
+            user.setPassword(password);
+            return new ResponseEntity(user, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity("User not found!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -53,7 +53,7 @@ public class RestController {
                                        @RequestParam(value = "password") String password){
 
         try {
-            User user =  userService.save(name, surname, login, encryptionService.encryptString(password), address, phoneNumber, "ROLE_client");
+            User user =  userService.save(name, surname, login, password, address, phoneNumber, "ROLE_client");
             return new ResponseEntity("user registration completed", HttpStatus.OK);
         }
         catch (Exception e){

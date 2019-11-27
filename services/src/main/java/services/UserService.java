@@ -12,6 +12,6 @@ public interface UserService {
               String address,
               String phoneNumber,
               String role);
-    User authorizeByLoginAndPassword(String login, String pwd);
+    User authorizeByLoginAndPassword(String login, String pwd) throws Exception;
     User findByUsername(String login);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class User extends BaseEntity {
 
 
-    private List<Role> roles;
+    private Role role;
     @Column (name = "name")
     private String name;
     @Column (name = "surname")
@@ -34,17 +34,18 @@ public class User extends BaseEntity {
         this.password = password;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.roles = Arrays.asList(role);
+        this.role = role;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
-    public List<Role> getRoles() {
-        return roles;
+
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getName() {

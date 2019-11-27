@@ -7,8 +7,10 @@ import dto.MenuDto;
 import entities.Role;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import services.EncryptionService;
 import services.UserService;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private EncryptionService encryptionService;
 
     @Autowired
     UserRepository userRepository;
@@ -38,13 +43,16 @@ public class UserServiceImpl implements UserService {
         if (roleName != null && !roleName.isEmpty()){
             role = roleRepository.getByName(roleName);
         }
-        User user = new User(firstName, lastName, login, pwd, address, Long.parseLong(phoneNumber), role);
+        User user = new User(firstName, lastName, login, encryptionService.encryptString(pwd), address, Long.parseLong(phoneNumber), role);
         return userRepository.save(user);
     }
 
     @Override
-    public User authorizeByLoginAndPassword(String login, String pwd) {
-        return userRepository.getByLoginAndPwd(login, pwd);
+    public User authorizeByLoginAndPassword(String login, String pwd) throws Exception {
+        User user = userRepository.findByLogin(login);
+        if (user == null) throw new Exception("Пользователь не найден!");
+        if (encryptionService.checkPassword(pwd, user.getPassword())) return user;
+        else throw new Exception("Неверный пароль!");
     }
 
     @Override

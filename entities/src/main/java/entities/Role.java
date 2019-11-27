@@ -11,8 +11,6 @@ public class Role extends BaseEntity {
 
     private String description;
 
-    private List<User> users;
-
     @Column
     public String getName() {
         return name;
@@ -29,15 +27,5 @@ public class Role extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }
