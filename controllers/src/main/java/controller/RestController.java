@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import services.EncryptionService;
 import services.MenuService;
 import services.UserService;
 
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class RestController {
 
     @Autowired
-    StrongPasswordEncryptor strongPasswordEncryptor;
+    EncryptionService encryptionService;
 
     @Autowired
     private MenuService menuService;
@@ -30,11 +31,11 @@ public class RestController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/authorize")
-    public ResponseEntity authorize(@RequestParam("login") String login,
+    @RequestMapping(value = "/login")
+    public ResponseEntity login(@RequestParam("login") String login,
                             @RequestParam("password") String password) {
         try{
-            User user = userService.authorizeByLoginAndPassword(login, password);
+            User user = userService.authorizeByLoginAndPassword(login, encryptionService.encryptString(password));
             if (user !=null && user.getId() != null)  return new ResponseEntity(user, HttpStatus.OK);
             else return new ResponseEntity("User not found!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -52,7 +53,7 @@ public class RestController {
                                        @RequestParam(value = "password") String password){
 
         try {
-            User user =  userService.save(name, surname, login, strongPasswordEncryptor.encryptPassword(password), address, phoneNumber, "client");
+            User user =  userService.save(name, surname, login, encryptionService.encryptString(password), address, phoneNumber, "ROLE_client");
             return new ResponseEntity("user registration completed", HttpStatus.OK);
         }
         catch (Exception e){
@@ -69,4 +70,5 @@ public class RestController {
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }
