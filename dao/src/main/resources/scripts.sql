@@ -14,5 +14,11 @@ INSERT INTO public.users(
 INSERT INTO public.menu(
 	id, ingredients, price, title, unit, weight)
 	VALUES (5, 'some ingredients', 150.00, 'salad', 1, 100);
-select setval('hibernate_sequence', 6);
+INSERT INTO public.order_type(
+	id, description, name)
+	VALUES (6, 'Самовывоз', 'self-delivery');
+INSERT INTO public.order_type(
+	id, description, name)
+	VALUES (7, 'Доставка', 'delivery');
+select setval('hibernate_sequence', 8);
 ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);
