@@ -14,6 +14,7 @@ import services.MenuService;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -40,5 +41,24 @@ public class MenuServiceImpl implements MenuService {
         Gson gson = new Gson();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readTree(gson.toJson(m).toString());
+    }
+
+    @Override
+    public Menu saveFromJson(String menuString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Menu menu = mapper.readValue(menuString, Menu.class);
+        return save(menu);
+    }
+
+    @Override
+    public Menu save(Menu menu) {
+        return menuRepository.save(menu);
+    }
+
+    @Override
+    public void remove(String menuListString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Menu[] menuArray= mapper.readValue(menuListString, Menu[].class);
+        Arrays.asList(menuArray).forEach(m -> menuRepository.delete(m));
     }
 }

@@ -8,8 +8,10 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,6 +67,27 @@ public class RestController {
     public ResponseEntity getAllMenu(){
         try {
             return new ResponseEntity(menuService.getAllDtos(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/addmenu")
+    public ResponseEntity addMenu(@RequestBody String body){
+        try {
+            return new ResponseEntity(menuService.saveFromJson(body), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/removemenu")
+    public ResponseEntity removeMenu(@RequestBody String body){
+        try {
+            menuService.remove(body);
+            return new ResponseEntity(null, HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
