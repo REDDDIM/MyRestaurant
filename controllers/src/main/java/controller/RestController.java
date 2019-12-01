@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import services.EncryptionService;
 import services.MenuService;
+import services.OrderService;
 import services.UserService;
 
 import java.io.IOException;
@@ -32,6 +33,9 @@ public class RestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(value = "/login")
     public ResponseEntity login(@RequestParam("login") String login,
@@ -88,6 +92,16 @@ public class RestController {
         try {
             menuService.remove(body);
             return new ResponseEntity(null, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/getOrders")
+    public ResponseEntity getOrders(@RequestParam("userId") String userId){
+        try {
+            return new ResponseEntity(orderService.getOrdersForUser(new Long(userId)), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

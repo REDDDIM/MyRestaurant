@@ -14,8 +14,7 @@ import java.sql.Date;
 @Table(name = "order_table")
 public class Order extends BaseEntity {
     private User user;
-    @Column(name = "order_type")
-    private String orderType;
+    private OrderType orderType;
     @Column(name = "order_date")
     private Date orderDate;
 
@@ -29,11 +28,13 @@ public class Order extends BaseEntity {
         this.user = user;
     }
 
-    public String getOrderType() {
+    @ManyToOne
+    @JoinColumn(name = "order_type_id")
+    public OrderType getOrderType() {
         return orderType;
     }
 
-    public void setOrderType(String orderType) {
+    public void setOrderType(OrderType orderType) {
         this.orderType = orderType;
     }
 
