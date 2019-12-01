@@ -2,7 +2,7 @@ package entities;
 
 import lombok.*;
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +17,8 @@ public class Order extends BaseEntity {
     private OrderType orderType;
     @Column(name = "order_date")
     private Date orderDate;
+    private String address;
+    private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -44,6 +46,22 @@ public class Order extends BaseEntity {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
 

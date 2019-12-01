@@ -108,4 +108,20 @@ public class RestController {
         }
     }
 
+    @RequestMapping("/createOrder")
+    public ResponseEntity createOrder(@RequestParam("userId") String userId,
+                                       @RequestParam("orderType") String orderType,
+                                       @RequestParam("resultPayment") String resultPayment,
+                                       @RequestParam("menu") String menu,
+                                       @RequestParam("address") String address,
+                                       @RequestParam("phoneNumber") String phoneNumber){
+        try {
+            orderService.createOrder(new Long(userId), orderType, resultPayment, menu, address, phoneNumber);
+            return new ResponseEntity(orderService.getOrdersForUser(new Long(userId)), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

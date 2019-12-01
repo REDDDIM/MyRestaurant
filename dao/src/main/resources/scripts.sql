@@ -20,5 +20,11 @@ INSERT INTO public.order_type(
 INSERT INTO public.order_type(
 	id, description, name)
 	VALUES (7, 'Доставка', 'delivery');
-select setval('hibernate_sequence', 8);
+INSERT INTO public.order_type(
+	id, description, name)
+	VALUES (8, 'Самовывоз', 'self_delivery');
+INSERT INTO public.order_type(
+	id, description, name)
+	VALUES (9, 'Доставка', 'courier_delivery');
+select setval('hibernate_sequence', 10);
 ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);

@@ -65,6 +65,7 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addmenu").hasRole("admin")
                 .antMatchers("/removemenu").hasRole("admin")
                 .antMatchers("/getOrders").hasRole("client")
+                .antMatchers("/createOrder").hasRole("client")
                 .and()
                 .httpBasic();
                 //.and()
