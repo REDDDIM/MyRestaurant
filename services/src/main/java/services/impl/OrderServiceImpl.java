@@ -1,8 +1,11 @@
 package services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.repository.OrderRepository;
+import dao.repository.OrderStatusRepository;
 import dao.repository.OrderTypeRepository;
 import dao.repository.UserRepository;
+import entities.Menu;
 import entities.Order;
 import entities.OrderType;
 import entities.User;
@@ -10,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.OrderService;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderTypeRepository orderTypeRepository;
 
+    @Autowired
+    OrderStatusRepository orderStatusRepository;
 
     @Override
     public List<Order> getOrdersForUser(Long userId) {
@@ -32,14 +39,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrder(Long userId, String orderType, String resultPayment, String menu, String address, String phoneNumber) {
-        Order order = new Order();
-        User user = userRepository.getOne(new Long(userId));
-        order.setUser(user);
-        order.setOrderType(orderTypeRepository.getByName(orderType));
-        order.setAddress(address);
-        order.setOrderDate(new Date());
-        order.setPhoneNumber(phoneNumber);
-        orderRepository.save(order);
+    public Order createOrder(String order) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Order order1 = mapper.readValue(order, Order.class);
+        order1.setUser(userRepository.findByLogin(order1.getUser().getLogin()));
+        order1.setOrderStatus(orderStatusRepository.getByName("new"));
+        order1.setOrderType(orderTypeRepository.getByName(order1.getOrderType().getName()));
+        return orderRepository.save(order1);
     }
+
+
 }

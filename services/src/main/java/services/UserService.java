@@ -3,6 +3,8 @@ package services;
 import entities.User;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 public interface UserService {
     User load(Long id);
     User save(String firstName,
@@ -14,4 +16,6 @@ public interface UserService {
               String role);
     User authorizeByLoginAndPassword(String login, String pwd) throws Exception;
     User findByUsername(String login);
+
+    List<User> getAll();
 }

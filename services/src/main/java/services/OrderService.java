@@ -2,15 +2,11 @@ package services;
 
 import entities.Order;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface OrderService {
     List<Order> getOrdersForUser(Long userId);
 
-    void createOrder(Long userId,
-                     String orderType,
-                     String resultPayment,
-                     String menu,
-                     String address,
-                     String phoneNumber);
+    Order createOrder(String order) throws IOException;
 }

@@ -3,6 +3,7 @@ package entities;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +21,7 @@ public class Order extends BaseEntity {
     private String address;
     private String phoneNumber;
     private OrderStatus orderStatus;
+    private List<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -73,6 +75,15 @@ public class Order extends BaseEntity {
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }
 

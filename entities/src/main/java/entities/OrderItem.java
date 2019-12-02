@@ -12,9 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 public class OrderItem extends BaseEntity {
-
     private Menu menu;
-    private Order order;
+
     @Column (name = "number_of_servings")
     private Integer numberOfServings;
 
@@ -26,16 +25,6 @@ public class OrderItem extends BaseEntity {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
-    }
-
-    @ManyToOne
-    @JoinColumn (name = "order_id")
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public Integer getNumberOfServings() {
