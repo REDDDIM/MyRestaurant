@@ -19,6 +19,7 @@ public class Order extends BaseEntity {
     private Date orderDate;
     private String address;
     private String phoneNumber;
+    private OrderStatus orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -62,6 +63,16 @@ public class Order extends BaseEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "order_status_id")
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
 

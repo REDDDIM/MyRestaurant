@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderTypeRepository extends JpaRepository<OrderType, Long> {
 
-    @Query("FROM QueryType WHERE name=:name")
+    @Query("FROM OrderType WHERE name=:name")
     OrderType getByName(@Param("name") String name);
 }

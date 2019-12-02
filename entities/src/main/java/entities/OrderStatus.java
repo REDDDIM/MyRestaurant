@@ -1,9 +1,16 @@
 package entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "order_status")
 public class OrderStatus extends BaseEntity {
     private String name;
     private String description;
 
+    @Column
     public String getName() {
         return name;
     }
@@ -12,6 +19,7 @@ public class OrderStatus extends BaseEntity {
         this.name = name;
     }
 
+    @Column
     public String getDescription() {
         return description;
     }
