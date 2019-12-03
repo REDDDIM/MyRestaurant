@@ -9,4 +9,6 @@ public interface OrderService {
     List<Order> getOrdersForUser(Long userId);
 
     Order createOrder(String order) throws IOException;
+
+    List<Order> getAll();
 }

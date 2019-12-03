@@ -121,9 +121,19 @@ public class RestController {
     }
 
     @RequestMapping("/getAllUsers")
-    public ResponseEntity getAllOrders(){
+    public ResponseEntity getAllUsers(){
         try {
             return new ResponseEntity(userService.getAll(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/getAllOrders")
+    public ResponseEntity getAllOrders(){
+        try {
+            return new ResponseEntity(orderService.getAll(), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
