@@ -35,5 +35,11 @@ INSERT INTO public.order_status(
 INSERT INTO public.order_status(
 	id, description, name)
 	VALUES (12, 'Завершен', 'completed');
-select setval('hibernate_sequence', 13);
+INSERT INTO public.role(
+	id, description, name)
+	VALUES (13, 'Клиент', 'ROLE_courier');
+INSERT INTO public.users(
+	id, address, login, name, password, phone_number, surname, role_id)
+	VALUES (14, 'courier_address', 'courier', 'courier_name', 'lm2P5UhgPcJ8djmG2HnJWgG56mGzgz3x73BgN5QTVT4kwkVoiGzMgLoVI0ip2kB/', 0000000000, 'courier_surname', 13);
+select setval('hibernate_sequence', 15);
 ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);
