@@ -5,10 +5,7 @@ import dao.repository.OrderRepository;
 import dao.repository.OrderStatusRepository;
 import dao.repository.OrderTypeRepository;
 import dao.repository.UserRepository;
-import entities.Menu;
-import entities.Order;
-import entities.OrderType;
-import entities.User;
+import entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.OrderService;
@@ -51,6 +48,24 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAll() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public void changeOrderStatus(Long orderId, String newStatusName) {
+        Order order = orderRepository.getOne(orderId);
+        OrderStatus status = orderStatusRepository.getByName(newStatusName);
+        order.setOrderStatus(status);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void setOrderToCourier(Long courierId, Long orderId) {
+        Order order = orderRepository.getOne(orderId);
+        OrderStatus newOrderStatus = orderStatusRepository.getByName("transferred_to_the_courier");
+        User courier = userRepository.getOne(courierId);
+        order.setOrderStatus(newOrderStatus);
+        order.setCourier(courier);
+        orderRepository.save(order);
     }
 
 

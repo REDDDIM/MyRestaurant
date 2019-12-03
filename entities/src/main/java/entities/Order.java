@@ -22,6 +22,7 @@ public class Order extends BaseEntity {
     private String phoneNumber;
     private OrderStatus orderStatus;
     private List<OrderItem> orderItems;
+    private User courier;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -84,6 +85,16 @@ public class Order extends BaseEntity {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "courier_id")
+    public User getCourier() {
+        return courier;
+    }
+
+    public void setCourier(User courier) {
+        this.courier = courier;
     }
 }
 

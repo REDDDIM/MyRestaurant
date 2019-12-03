@@ -95,4 +95,5 @@ public class User extends BaseEntity {
     public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

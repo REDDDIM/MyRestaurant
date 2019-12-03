@@ -18,4 +18,7 @@ public interface UserService {
     User findByUsername(String login);
 
     List<User> getAll();
+
+    List<User> getAllCouriers();
+
 }

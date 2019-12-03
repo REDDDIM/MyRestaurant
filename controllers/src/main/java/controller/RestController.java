@@ -140,5 +140,37 @@ public class RestController {
         }
     }
 
+    @RequestMapping("/getAllCouriers")
+    public ResponseEntity getAllCouriers(){
+        try {
+            return new ResponseEntity(userService.getAllCouriers(), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/changeOrderStatus")
+    public ResponseEntity changeOrderStatus(@RequestParam("orderId") String orderId, @RequestParam("newStatusName") String newStatusName){
+        try {
+            orderService.changeOrderStatus(new Long(orderId), newStatusName);
+            return new ResponseEntity(null, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping("/setOrderToCourier")
+    public ResponseEntity setOrderToCourier(@RequestParam("courierId") String courierId, @RequestParam("orderId") String orderId){
+        try {
+            orderService.setOrderToCourier(new Long(courierId), new Long(orderId));
+            return new ResponseEntity(null, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

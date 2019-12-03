@@ -1,9 +1,9 @@
 package services.impl;
 
-import dao.repository.MenuRepository;
-import dao.repository.RoleRepository;
-import dao.repository.UserRepository;
+import dao.repository.*;
 import dto.MenuDto;
+import entities.Order;
+import entities.OrderStatus;
 import entities.Role;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
+    OrderStatusRepository orderStatusRepository;
 
 
     @Override
@@ -63,5 +69,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllCouriers() {
+        return userRepository.getAllCouries();
     }
 }

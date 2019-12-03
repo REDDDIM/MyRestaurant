@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
+
+import static org.springframework.http.HttpHeaders.FROM;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -17,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("FROM User WHERE login=:login")
     User findByLogin(@Param("login") String login);
+
+    @Query("FROM User WHERE role.name = 'ROLE_courier'")
+    List<User> getAllCouries();
 }

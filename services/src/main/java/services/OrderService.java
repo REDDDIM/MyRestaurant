@@ -11,4 +11,8 @@ public interface OrderService {
     Order createOrder(String order) throws IOException;
 
     List<Order> getAll();
+
+    void changeOrderStatus(Long orderId, String newStatusName);
+
+    void setOrderToCourier(Long courierId, Long orderId);
 }
