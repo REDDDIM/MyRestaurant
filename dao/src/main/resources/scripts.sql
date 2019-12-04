@@ -37,7 +37,7 @@ INSERT INTO public.order_status(
 	VALUES (12, 'Завершен', 'completed');
 INSERT INTO public.role(
 	id, description, name)
-	VALUES (13, 'Клиент', 'ROLE_courier');
+	VALUES (13, 'Курьер', 'ROLE_courier');
 INSERT INTO public.users(
 	id, address, login, name, password, phone_number, surname, role_id)
 	VALUES (14, 'courier_address', 'courier', 'courier_name', 'lm2P5UhgPcJ8djmG2HnJWgG56mGzgz3x73BgN5QTVT4kwkVoiGzMgLoVI0ip2kB/', 0000000000, 'courier_surname', 13);
