@@ -12,4 +12,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("FROM Order WHERE user.id=:userId")
     List<Order> getByUserId(@Param("userId") Long userId);
+
+    @Query("FROM Order WHERE courier.id=:courierId")
+    List<Order> getCourierOrders(@Param("courierId") Long courierId);
 }

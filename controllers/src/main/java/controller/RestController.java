@@ -172,5 +172,15 @@ public class RestController {
         }
     }
 
+    @RequestMapping("/getCourierOrders")
+    public ResponseEntity getCourierOrders(@RequestParam("courierId") String courierId){
+        try {
+            return new ResponseEntity(orderService.getCourierOrders(new Long(courierId)), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

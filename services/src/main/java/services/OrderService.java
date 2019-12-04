@@ -15,4 +15,6 @@ public interface OrderService {
     void changeOrderStatus(Long orderId, String newStatusName);
 
     void setOrderToCourier(Long courierId, Long orderId);
+
+    List<Order> getCourierOrders(Long courierId);
 }

@@ -68,5 +68,10 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
+    @Override
+    public List<Order> getCourierOrders(Long courierId) {
+        return orderRepository.getCourierOrders(courierId);
+    }
+
 
 }
