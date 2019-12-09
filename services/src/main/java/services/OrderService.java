@@ -17,4 +17,6 @@ public interface OrderService {
     void setOrderToCourier(Long courierId, Long orderId);
 
     List<Order> getCourierOrders(Long courierId);
+
+    void remove(Long id);
 }

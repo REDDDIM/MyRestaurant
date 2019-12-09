@@ -21,4 +21,5 @@ public interface UserService {
 
     List<User> getAllCouriers();
 
+    void remove(Long id);
 }

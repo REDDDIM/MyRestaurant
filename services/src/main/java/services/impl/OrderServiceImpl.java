@@ -73,5 +73,10 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.getCourierOrders(courierId);
     }
 
+    @Override
+    public void remove(Long id) {
+        orderRepository.delete(id);
+    }
+
 
 }

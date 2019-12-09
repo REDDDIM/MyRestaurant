@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllCouriers() {
         return userRepository.getAllCouries();
     }
+
+    @Override
+    public void remove(Long id) {
+        userRepository.delete(id);
+    }
 }
