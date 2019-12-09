@@ -22,7 +22,7 @@ import java.io.IOException;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MyRestaurantApp.class)
-public class ServicesTest {
+public class ApplicationTest {
 
     @Autowired
     MenuService menuService;
