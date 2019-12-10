@@ -11,7 +11,7 @@ INSERT INTO public.users(
 INSERT INTO public.users(
 	id, address, login, name, password, phone_number, surname, role_id)
 	VALUES (4, 'client_address', 'client', 'client_name', 'OFDe6NPf28BWIKXLdPBUIDY8MeoLDLtosTFCgfB89GW+j0btbEQXGViFz0pVX/iW', 9876543210, 'client_surname', 2);
-INSERT INTO public.menu(
+INSERT INTO public.position(
 	id, ingredients, price, title, unit, weight)
 	VALUES (5, 'some ingredients', 150.00, 'salad', 1, 100);
 INSERT INTO public.order_type(

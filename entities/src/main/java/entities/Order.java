@@ -12,7 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @Entity
-@Table(name = "order_table")
+@Table(name="\"order\"")
 public class Order extends BaseEntity {
     private User user;
     private OrderType orderType;

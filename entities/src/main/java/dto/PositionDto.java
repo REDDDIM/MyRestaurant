@@ -1,6 +1,6 @@
 package dto;
 
-import entities.Menu;
+import entities.Position;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 
 
-public class MenuDto extends BaseDto<Menu> {
+public class PositionDto extends BaseDto<Position> {
 
     private String title;
     private String ingredients;

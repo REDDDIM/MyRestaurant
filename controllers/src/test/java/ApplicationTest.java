@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import services.MenuService;
+import services.PositionService;
 import services.OrderService;
 import services.UserService;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
 public class ApplicationTest {
 
     @Autowired
-    MenuService menuService;
+    PositionService positionService;
 
     @Autowired
     OrderService orderService;
@@ -36,13 +36,13 @@ public class ApplicationTest {
     @Test
     public void testMenu() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode json = menuService.saveAndReturnAsJson("test_title",
+        JsonNode json = positionService.saveAndReturnAsJson("test_title",
                 "test_ingredients",
                 "1",
                 "1",
                 "1");
-        assertNotNull(menuService.getAllDtos());
-        menuService.remove("["+json.toString()+"]");
+        assertNotNull(positionService.getAllDtos());
+        positionService.remove("["+json.toString()+"]");
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ApplicationTest {
     @Test
     public void mockExample(){
         PositionController restController = mock(PositionController.class);
-        when(restController.removeMenu("test")).thenReturn(new ResponseEntity(null, HttpStatus.OK));
-        assertEquals(200, restController.removeMenu("test").getStatusCode().value());
+        when(restController.removePosition("test")).thenReturn(new ResponseEntity(null, HttpStatus.OK));
+        assertEquals(200, restController.removePosition("test").getStatusCode().value());
     }
 }

@@ -1,12 +1,12 @@
 package entities;
 
-import dto.MenuDto;
+import dto.PositionDto;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "menu")
-public class Menu extends BaseEntity<MenuDto> {
+@Table(name = "position")
+public class Position extends BaseEntity<PositionDto> {
 
     @Column (name = "title")
     private String title;

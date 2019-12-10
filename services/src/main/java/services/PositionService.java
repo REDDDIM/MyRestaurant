@@ -1,20 +1,20 @@
 package services;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dto.MenuDto;
-import entities.Menu;
+import dto.PositionDto;
+import entities.Position;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface MenuService {
-    List<MenuDto> getAllDtos();
+public interface PositionService {
+    List<PositionDto> getAllDtos();
     JsonNode saveAndReturnAsJson(String title,
                                   String ingredients,
                                   String weight,
                                   String unit,
                                   String price) throws IOException;
-    Menu saveFromJson(String menuString) throws IOException;
-    Menu save(Menu menu);
+    Position saveFromJson(String menuString) throws IOException;
+    Position save(Position menu);
     void remove(String menuListString) throws IOException;
 }

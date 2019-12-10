@@ -6,38 +6,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import services.MenuService;
+import services.PositionService;
 
 @RestController(value = "/position")
 public class PositionController {
 
     @Autowired
-    MenuService menuService;
+    PositionService positionService;
 
-    @PostMapping("/allmenu")
-    public ResponseEntity getAllMenu(){
+    @PostMapping("/allpositions")
+    public ResponseEntity getAllPositions(){
         try {
-            return new ResponseEntity(menuService.getAllDtos(), HttpStatus.OK);
+            return new ResponseEntity(positionService.getAllDtos(), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/addmenu")
-    public ResponseEntity addMenu(@RequestBody String body){
+    @PostMapping("/addposition")
+    public ResponseEntity addPosition(@RequestBody String body){
         try {
-            return new ResponseEntity(menuService.saveFromJson(body), HttpStatus.OK);
+            return new ResponseEntity(positionService.saveFromJson(body), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PostMapping("/removemenu")
-    public ResponseEntity removeMenu(@RequestBody String body){
+    @PostMapping("/removeposition")
+    public ResponseEntity removePosition(@RequestBody String body){
         try {
-            menuService.remove(body);
+            positionService.remove(body);
             return new ResponseEntity(null, HttpStatus.OK);
         }
         catch (Exception e){

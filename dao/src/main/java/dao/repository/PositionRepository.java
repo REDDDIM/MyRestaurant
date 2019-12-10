@@ -1,10 +1,10 @@
 package dao.repository;
 
-import entities.Menu;
+import entities.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenuRepository extends JpaRepository<Menu, Long> {
+public interface PositionRepository extends JpaRepository<Position, Long> {
 
 }

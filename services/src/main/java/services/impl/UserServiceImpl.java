@@ -1,7 +1,7 @@
 package services.impl;
 
 import dao.repository.*;
-import dto.MenuDto;
+import dto.PositionDto;
 import entities.Order;
 import entities.OrderStatus;
 import entities.Role;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    MenuRepository menuRepository;
+    PositionRepository positionRepository;
 
     @Autowired
     RoleRepository roleRepository;

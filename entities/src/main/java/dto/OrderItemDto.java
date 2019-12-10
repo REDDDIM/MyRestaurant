@@ -1,6 +1,6 @@
 package dto;
 
-import entities.Menu;
+import entities.Position;
 import entities.Order;
 import entities.OrderItem;
 import lombok.AllArgsConstructor;
