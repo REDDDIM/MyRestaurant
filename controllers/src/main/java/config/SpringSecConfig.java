@@ -19,19 +19,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Configuration
 public class SpringSecConfig extends WebSecurityConfigurerAdapter {
 
-    /*@Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;*/
-
     private AuthenticationProvider authenticationProvider;
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider);
-    }*/
 
    @Autowired
     @Qualifier("daoAuthenticationProvider")
@@ -53,37 +44,25 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
         return daoAuthenticationProvider;
     }
 
-    /*@Autowired
-    public void configureAuthManager(AuthenticationManagerBuilder authenticationManagerBuilder){
-        authenticationManagerBuilder.authenticationProvider(authenticationProvider);
-    }*/
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests().antMatchers("/","/registration", "/login").permitAll()
-                .antMatchers("/allmenu").hasAnyRole("client", "admin")
-                .antMatchers("/addmenu").hasRole("admin")
-                .antMatchers("/removemenu").hasRole("admin")
-                .antMatchers("/getOrders").hasRole("client")
-                .antMatchers("/createOrder").hasRole("client")
+                .antMatchers("/position/allposition").hasAnyRole("client", "admin")
+                .antMatchers("/position/addposition").hasRole("admin")
+                .antMatchers("/position/removeposition").hasRole("admin")
+                .antMatchers("/order/getOrders").hasRole("client")
+                .antMatchers("/order/createOrder").hasRole("client")
                 .antMatchers("/user/getAllUsers").hasRole("admin")
-                .antMatchers("/getAllOrders").hasRole("admin")
-                .antMatchers("/getAllCouriers").hasRole("admin")
-                .antMatchers("/changeOrderStatus").hasAnyRole("admin", "courier")
-                .antMatchers("/setOrderToCourier").hasRole("admin")
-                .antMatchers("/getCourierOrders").hasRole("courier")
+                .antMatchers("/order/getAllOrders").hasRole("admin")
+                .antMatchers("/user/getAllCouriers").hasRole("admin")
+                .antMatchers("/order/changeOrderStatus").hasAnyRole("admin", "courier")
+                .antMatchers("/order/setOrderToCourier").hasRole("admin")
+                .antMatchers("/order/getCourierOrders").hasRole("courier")
                 .and()
                 .httpBasic();
-                //.and()
-                //.logout().permitAll()
-                //.and().httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint);
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
         httpSecurity.addFilter(new BasicAuthenticationFilter(authenticationManager()));
     }
-
-    /*@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.
-    }*/
 }
