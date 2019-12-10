@@ -1,7 +1,7 @@
 import application.MyRestaurantApp;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.RestController;
+import controller.PositionController;
 import entities.User;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
@@ -63,7 +63,7 @@ public class ApplicationTest {
 
     @Test
     public void mockExample(){
-        RestController restController = mock(RestController.class);
+        PositionController restController = mock(PositionController.class);
         when(restController.removeMenu("test")).thenReturn(new ResponseEntity(null, HttpStatus.OK));
         assertEquals(200, restController.removeMenu("test").getStatusCode().value());
     }
