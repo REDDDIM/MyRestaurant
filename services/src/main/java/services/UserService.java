@@ -1,5 +1,6 @@
 package services;
 
+import dto.UserDto;
 import entities.User;
 import org.springframework.ui.Model;
 
@@ -7,19 +8,13 @@ import java.util.List;
 
 public interface UserService {
     User load(Long id);
-    User save(String firstName,
-              String lastName,
-              String login,
-              String pwd,
-              String address,
-              String phoneNumber,
-              String role);
-    User authorizeByLoginAndPassword(String login, String pwd) throws Exception;
+    User createNewUser(UserDto userDto);
+    UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception;
     User findByUsername(String login);
 
-    List<User> getAll();
+    List<UserDto> getAll();
 
-    List<User> getAllCouriers();
+    List<UserDto> getAllCouriers();
 
     void remove(Long id);
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import services.OrderService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -17,66 +20,36 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping("/getOrders")
-    public ResponseEntity getOrders(@RequestParam("userId") String userId){
-        try {
-            return new ResponseEntity(orderService.getOrdersForUser(new Long(userId)), HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public List<OrderDto> getOrders(@RequestParam("userId") String userId){
+        return orderService.getOrdersForUser(new Long(userId));
     }
 
 
     @PostMapping("/createOrder")
-    public ResponseEntity createOrder(@RequestParam("order") String order){
-        try {
+    public ResponseEntity createOrder(@RequestParam("order") OrderDto order){
             orderService.createOrder(order);
             return new ResponseEntity(null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @PostMapping("/getAllOrders")
-    public ResponseEntity getAllOrders(){
-        try {
-            return new ResponseEntity(orderService.getAll(), HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public List<OrderDto> getAllOrders(){
+        return orderService.getAll();
     }
 
     @PostMapping("/changeOrderStatus")
     public ResponseEntity changeOrderStatus(@RequestParam("orderId") String orderId, @RequestParam("newStatusName") String newStatusName){
-        try {
-            orderService.changeOrderStatus(new Long(orderId), newStatusName);
-            return new ResponseEntity(null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        orderService.changeOrderStatus(new Long(orderId), newStatusName);
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @PostMapping("/setOrderToCourier")
     public ResponseEntity setOrderToCourier(@RequestParam("courierId") String courierId, @RequestParam("orderId") String orderId){
-        try {
-            orderService.setOrderToCourier(new Long(courierId), new Long(orderId));
-            return new ResponseEntity(null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        orderService.setOrderToCourier(new Long(courierId), new Long(orderId));
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @PostMapping("/getCourierOrders")
-    public ResponseEntity getCourierOrders(@RequestParam("courierId") String courierId){
-        try {
-            return new ResponseEntity(orderService.getCourierOrders(new Long(courierId)), HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public List<OrderDto> getCourierOrders(@RequestParam("courierId") String courierId){
+        return orderService.getCourierOrders(new Long(courierId));
     }
 }

@@ -1,20 +1,16 @@
 package services.impl;
 
 import dao.repository.*;
-import dto.PositionDto;
-import entities.Order;
-import entities.OrderStatus;
+import dto.UserDto;
 import entities.Role;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+import services.ConverterService;
 import services.EncryptionService;
 import services.UserService;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     OrderStatusRepository orderStatusRepository;
 
+    @Autowired
+    ConverterService<UserDto, User> converterService;
+
 
     @Override
     public User load(Long id) {
@@ -44,20 +43,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(String firstName, String lastName, String login, String pwd, String address, String phoneNumber, String roleName) {
+    public User createNewUser(UserDto userDto) {
         Role role = null;
-        if (roleName != null && !roleName.isEmpty()){
-            role = roleRepository.getByName(roleName);
+        if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
+            role = roleRepository.getByName(userDto.getRole().getName());
         }
-        User user = new User(firstName, lastName, login, encryptionService.encryptString(pwd), address, Long.parseLong(phoneNumber), role);
+        User user = converterService.convertToEntity(userDto);
+        user.setPassword(encryptionService.encryptString(userDto.getPassword()));
+        user.setRole(role);
         return userRepository.save(user);
     }
 
     @Override
-    public User authorizeByLoginAndPassword(String login, String pwd) throws Exception {
-        User user = userRepository.findByLogin(login);
-        if (user == null) throw new Exception("Пользователь не найден!");
-        if (encryptionService.checkPassword(pwd, user.getPassword())) return user;
+    public UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception {
+        UserDto userDto = converterService.convertToDto(userRepository.findByLogin(login));
+        if (userDto == null) throw new Exception("Пользователь не найден!");
+        if (encryptionService.checkPassword(pwd, userDto.getPassword())){
+            userDto.setPassword(pwd);
+            return userDto;
+        }
         else throw new Exception("Неверный пароль!");
     }
 
@@ -67,13 +71,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDto> getAll() {
+        return userRepository.findAll().stream().
+                map(e -> converterService.convertToDto(e)).collect(Collectors.toList());
     }
 
     @Override
-    public List<User> getAllCouriers() {
-        return userRepository.getAllCouries();
+    public List<UserDto> getAllCouriers() {
+        return userRepository.getAllCouries().stream().
+                map(e -> converterService.convertToDto(e)).collect(Collectors.toList());
     }
 
     @Override

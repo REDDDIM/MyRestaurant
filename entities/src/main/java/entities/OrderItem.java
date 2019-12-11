@@ -12,19 +12,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 public class OrderItem extends BaseEntity {
-    private Position menu;
+    private Position position;
 
     @Column (name = "number_of_servings")
     private Integer numberOfServings;
 
     @ManyToOne
-    @JoinColumn (name = "menu_id")
+    @JoinColumn (name = "position_id")
     public Position getMenu() {
-        return menu;
+        return position;
     }
 
-    public void setMenu(Position menu) {
-        this.menu = menu;
+    public void setMenu(Position position) {
+        this.position = position;
     }
 
     public Integer getNumberOfServings() {

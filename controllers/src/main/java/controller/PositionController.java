@@ -1,5 +1,7 @@
 package controller;
 
+import dto.PositionDto;
+import entities.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import services.PositionService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/position")
 public class PositionController {
@@ -17,33 +21,18 @@ public class PositionController {
     PositionService positionService;
 
     @PostMapping("/allpositions")
-    public ResponseEntity getAllPositions(){
-        try {
-            return new ResponseEntity(positionService.getAllDtos(), HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public List<PositionDto> getAllPositions(){
+        return positionService.getAll();
     }
 
     @PostMapping("/addposition")
-    public ResponseEntity addPosition(@RequestBody String body){
-        try {
-            return new ResponseEntity(positionService.saveFromJson(body), HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public PositionDto addPosition(@RequestBody PositionDto dto){
+        return positionService.save(dto);
     }
 
     @PostMapping("/removeposition")
-    public ResponseEntity removePosition(@RequestBody String body){
-        try {
-            positionService.remove(body);
+    public ResponseEntity removePosition(@RequestBody List<PositionDto> positionDtos){
+            positionService.remove(positionDtos);
             return new ResponseEntity(null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 }

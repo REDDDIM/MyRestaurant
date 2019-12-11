@@ -5,7 +5,7 @@ import org.modelmapper.ModelMapper;
 
 import java.lang.reflect.ParameterizedType;
 
-public class BaseDto<E extends BaseEntity> {
+public class BaseDto {
     private Long id;
 
     public Long getId() {
@@ -19,10 +19,5 @@ public class BaseDto<E extends BaseEntity> {
     @Override
     public String toString() {
         return getClass().getName()+"{id="+getId()+"}";
-    }
-
-    public E convertToEntity(){
-        return new ModelMapper().map(this, (Class<E>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0]);
     }
 }

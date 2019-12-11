@@ -41,7 +41,7 @@ public class ApplicationTest {
                 "1",
                 "1",
                 "1");
-        assertNotNull(positionService.getAllDtos());
+        assertNotNull(positionService.getAll());
         positionService.remove("["+json.toString()+"]");
     }
 

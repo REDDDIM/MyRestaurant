@@ -1,5 +1,6 @@
 package entities;
 
+import dto.UserDto;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Arrays;
@@ -10,8 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
-
+public class User extends BaseEntity<UserDto> {
 
     private Role role;
     @Column (name = "name")

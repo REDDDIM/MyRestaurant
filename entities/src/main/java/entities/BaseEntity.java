@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 
 @MappedSuperclass
-public class BaseEntity<D extends BaseDto> implements Serializable {
+public class BaseEntity implements Serializable {
 
     private Long id;
 
@@ -26,10 +26,4 @@ public class BaseEntity<D extends BaseDto> implements Serializable {
     public String toString() {
         return getClass().getName()+"{id="+getId()+"}";
     }
-
-    public D convertToDto(){
-        return new ModelMapper().map(this, (Class<D>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0]);
-    }
-
 }

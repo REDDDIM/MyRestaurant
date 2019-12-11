@@ -19,6 +19,18 @@ public class PositionDto extends BaseDto<Position> {
     private String unit;
     private BigDecimal price;
 
+    public PositionDto(Long id, String title, String ingredients, Integer weight, String unit, BigDecimal price) {
+        this.setId(id);
+        this.title = title;
+        this.ingredients = ingredients;
+        this.weight = weight;
+        this.unit = unit;
+        this.price = price;
+    }
+
+    public PositionDto() {
+    }
+
     public String getTitle() {
         return title;
     }

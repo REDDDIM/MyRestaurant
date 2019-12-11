@@ -5,15 +5,15 @@ import dao.repository.OrderRepository;
 import dao.repository.OrderStatusRepository;
 import dao.repository.OrderTypeRepository;
 import dao.repository.UserRepository;
+import dto.OrderDto;
 import entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import services.ConverterService;
 import services.OrderService;
-
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -30,24 +30,30 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderStatusRepository orderStatusRepository;
 
+    @Autowired
+    ConverterService<OrderDto, Order> converterService;
+
     @Override
-    public List<Order> getOrdersForUser(Long userId) {
-        return orderRepository.getByUserId(userId);
+    public List<OrderDto> getOrdersForUser(Long userId) {
+        return orderRepository.getByUserId(userId)
+                .stream().map(e -> converterService.convertToDto(e)).
+                        collect(Collectors.toList());
     }
 
     @Override
-    public Order createOrder(String order) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        Order order1 = mapper.readValue(order, Order.class);
-        order1.setUser(userRepository.findByLogin(order1.getUser().getLogin()));
-        order1.setOrderStatus(orderStatusRepository.getByName("new"));
-        order1.setOrderType(orderTypeRepository.getByName(order1.getOrderType().getName()));
-        return orderRepository.save(order1);
+    public Order createOrder(OrderDto order){
+        Order orderEntity = converterService.convertToEntity(order);
+        orderEntity.setUser(userRepository.findByLogin(order.getUser().getLogin()));
+        orderEntity.setOrderStatus(orderStatusRepository.getByName("new"));
+        orderEntity.setOrderType(orderTypeRepository.getByName(order.getOrderType().getName()));
+        return orderRepository.save(orderEntity);
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public List<OrderDto> getAll() {
+        return orderRepository.findAll().
+                stream().map(e -> converterService.convertToDto(e)).
+                collect(Collectors.toList());
     }
 
     @Override
@@ -69,8 +75,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getCourierOrders(Long courierId) {
-        return orderRepository.getCourierOrders(courierId);
+    public List<OrderDto> getCourierOrders(Long courierId) {
+        return orderRepository.getCourierOrders(courierId).
+                stream().map(e -> converterService.convertToDto(e)).
+                collect(Collectors.toList());
     }
 
     @Override
