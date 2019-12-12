@@ -19,11 +19,11 @@ public class OrderItem extends BaseEntity {
 
     @ManyToOne
     @JoinColumn (name = "position_id")
-    public Position getMenu() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setMenu(Position position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 

@@ -14,25 +14,27 @@ import java.util.stream.Collectors;
 public class PositionServiceImpl implements PositionService {
 
     @Autowired
-    private PositionRepository menuRepository;
+    private PositionRepository positionRepository;
 
     @Autowired
     private ConverterService<PositionDto, Position> converterService;
 
     @Override
     public List<PositionDto> getAll() {
-        return menuRepository.findAll()
-                .stream().map(e -> converterService.convertToDto(e)).
+        return positionRepository.findAll()
+                .stream().map(e -> converterService.convertToDto(e, PositionDto.class)).
                         collect(Collectors.toList());
     }
 
     @Override
     public PositionDto save(PositionDto positionDto) {
-        return converterService.convertToDto(menuRepository.save(converterService.convertToEntity(positionDto)));
+        return converterService.convertToDto(
+                positionRepository.save(
+                        converterService.convertToEntity(positionDto, Position.class)), PositionDto.class);
     }
 
     @Override
     public void remove(List<PositionDto> positionDtos){
-        positionDtos.forEach(m -> menuRepository.delete(m.getId()));
+        positionDtos.forEach(m -> positionRepository.delete(m.getId()));
     }
 }

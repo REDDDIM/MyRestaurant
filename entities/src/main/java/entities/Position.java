@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "position")
-public class Position extends BaseEntity<PositionDto> {
+public class Position extends BaseEntity{
 
     @Column (name = "title")
     private String title;
@@ -18,6 +18,9 @@ public class Position extends BaseEntity<PositionDto> {
     private String unit;
     @Column (name = "price")
     private BigDecimal price;
+
+    public Position() {
+    }
 
     public String getTitle() {
         return title;

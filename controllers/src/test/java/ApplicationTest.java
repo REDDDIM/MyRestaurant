@@ -33,8 +33,8 @@ public class ApplicationTest {
     @Autowired
     UserService userService;
 
-    @Test
-    public void testMenu() throws IOException {
+    /*@Test
+    public void testPosition() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode json = positionService.saveAndReturnAsJson("test_title",
                 "test_ingredients",
@@ -43,9 +43,9 @@ public class ApplicationTest {
                 "1");
         assertNotNull(positionService.getAll());
         positionService.remove("["+json.toString()+"]");
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testUser() throws Exception {
         User user = userService.save("test_firstname",
                 "test_lastname",
@@ -59,12 +59,12 @@ public class ApplicationTest {
         userService.getAllCouriers();
         userService.authorizeByLoginAndPassword("test_login", "test_password");
         userService.remove(user.getId());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void mockExample(){
         PositionController restController = mock(PositionController.class);
         when(restController.removePosition("test")).thenReturn(new ResponseEntity(null, HttpStatus.OK));
         assertEquals(200, restController.removePosition("test").getStatusCode().value());
-    }
+    }*/
 }

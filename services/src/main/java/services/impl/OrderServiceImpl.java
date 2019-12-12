@@ -36,13 +36,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getOrdersForUser(Long userId) {
         return orderRepository.getByUserId(userId)
-                .stream().map(e -> converterService.convertToDto(e)).
+                .stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
                         collect(Collectors.toList());
     }
 
     @Override
     public Order createOrder(OrderDto order){
-        Order orderEntity = converterService.convertToEntity(order);
+        Order orderEntity = converterService.convertToEntity(order, Order.class);
         orderEntity.setUser(userRepository.findByLogin(order.getUser().getLogin()));
         orderEntity.setOrderStatus(orderStatusRepository.getByName("new"));
         orderEntity.setOrderType(orderTypeRepository.getByName(order.getOrderType().getName()));
@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAll() {
         return orderRepository.findAll().
-                stream().map(e -> converterService.convertToDto(e)).
+                stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
                 collect(Collectors.toList());
     }
 
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getCourierOrders(Long courierId) {
         return orderRepository.getCourierOrders(courierId).
-                stream().map(e -> converterService.convertToDto(e)).
+                stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
                 collect(Collectors.toList());
     }
 

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 
 
-public class PositionDto extends BaseDto<Position> {
+public class PositionDto extends BaseDto{
 
     private String title;
     private String ingredients;

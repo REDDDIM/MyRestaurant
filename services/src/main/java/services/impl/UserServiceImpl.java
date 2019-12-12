@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
             role = roleRepository.getByName(userDto.getRole().getName());
         }
-        User user = converterService.convertToEntity(userDto);
+        User user = converterService.convertToEntity(userDto, User.class);
         user.setPassword(encryptionService.encryptString(userDto.getPassword()));
         user.setRole(role);
         return userRepository.save(user);
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception {
-        UserDto userDto = converterService.convertToDto(userRepository.findByLogin(login));
+        UserDto userDto = converterService.convertToDto(userRepository.findByLogin(login), UserDto.class);
         if (userDto == null) throw new Exception("Пользователь не найден!");
         if (encryptionService.checkPassword(pwd, userDto.getPassword())){
             userDto.setPassword(pwd);
@@ -73,13 +73,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAll() {
         return userRepository.findAll().stream().
-                map(e -> converterService.convertToDto(e)).collect(Collectors.toList());
+                map(e -> converterService.convertToDto(e, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<UserDto> getAllCouriers() {
         return userRepository.getAllCouries().stream().
-                map(e -> converterService.convertToDto(e)).collect(Collectors.toList());
+                map(e -> converterService.convertToDto(e, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
