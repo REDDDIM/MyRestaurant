@@ -6,9 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import services.ConverterService;
 
-import javax.jws.WebParam;
-import java.lang.reflect.ParameterizedType;
-
 @Service
 public class ConverterServiceImpl<D extends BaseDto, E extends BaseEntity> implements ConverterService<D, E> {
     @Override

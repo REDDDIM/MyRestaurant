@@ -1,15 +1,6 @@
 package dto;
 
-import entities.OrderItem;
-import entities.OrderStatus;
-import entities.OrderType;
-import entities.User;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 

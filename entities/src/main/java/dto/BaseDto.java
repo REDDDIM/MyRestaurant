@@ -1,10 +1,6 @@
 package dto;
 
-import entities.BaseEntity;
-import org.modelmapper.ModelMapper;
-
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 
 public class BaseDto implements Serializable {
     private Long id;

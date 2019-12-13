@@ -4,10 +4,7 @@ import dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.OrderService;
 
 import java.util.List;
@@ -26,7 +23,7 @@ public class OrderController {
 
 
     @PostMapping("/createOrder")
-    public ResponseEntity createOrder(@RequestParam("order") OrderDto order){
+    public ResponseEntity createOrder(@RequestBody OrderDto order){
             orderService.createOrder(order);
             return new ResponseEntity(null, HttpStatus.OK);
     }
