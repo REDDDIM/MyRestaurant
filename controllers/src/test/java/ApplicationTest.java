@@ -1,10 +1,10 @@
 import application.MyRestaurantApp;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.PositionController;
-import entities.User;
-import static org.mockito.Mockito.*;
+import dto.PositionDto;
+import dto.UserDto;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import services.PositionService;
 import services.OrderService;
 import services.UserService;
-
-import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Arrays;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,38 +33,47 @@ public class ApplicationTest {
     @Autowired
     UserService userService;
 
-    /*@Test
-    public void testPosition() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode json = positionService.saveAndReturnAsJson("test_title",
-                "test_ingredients",
-                "1",
-                "1",
-                "1");
-        assertNotNull(positionService.getAll());
-        positionService.remove("["+json.toString()+"]");
-    }*/
+    @Test
+    public void testPosition(){
+        PositionDto positionDto = new PositionDto();
+        positionDto.setTitle("test_title");
+        positionDto.setIngredients("test_ingredients");
+        positionDto.setPrice(new BigDecimal(1));
+        positionDto.setWeight(1);
+        positionDto.setUnit("1");
+        positionDto = positionService.save(positionDto);
+        assertNotNull(positionDto.getId());
+        assertTrue(!positionService.getAll().isEmpty());
+        positionService.remove(Arrays.asList(positionDto));
+    }
 
-    /*@Test
-    public void testUser() throws Exception {
-        User user = userService.save("test_firstname",
-                "test_lastname",
-                "test_login",
-                "test_password",
-                "test_address",
-                "1234567890",
-                "client");
-        userService.findByUsername("test_login");
-        userService.getAll();
-        userService.getAllCouriers();
-        userService.authorizeByLoginAndPassword("test_login", "test_password");
-        userService.remove(user.getId());
-    }*/
+    @Test
+    public void userTest(){
+        UserDto userDto = new UserDto();
+        userDto.setName("test_name");
+        userDto.setSurname("test_surname");
+        userDto.setLogin("test_login");
+        userDto.setPassword("test_password");
+        userDto.setAddress("test_address");
+        userDto.setPhoneNumber(new Long(1234567890));
+        userDto = userService.createNewUser(userDto);
+        assertNotNull(userDto.getId());
+        assertTrue(!userService.getAll().isEmpty());
+        userService.remove(userDto.getId());
+    }
 
-    /*@Test
+
+
+    @Test
     public void mockExample(){
+        PositionDto positionDto = new PositionDto();
+        positionDto.setTitle("test_title");
+        positionDto.setIngredients("test_ingredients");
+        positionDto.setPrice(new BigDecimal(1));
+        positionDto.setWeight(1);
+        positionDto.setUnit("1");
         PositionController restController = mock(PositionController.class);
-        when(restController.removePosition("test")).thenReturn(new ResponseEntity(null, HttpStatus.OK));
-        assertEquals(200, restController.removePosition("test").getStatusCode().value());
-    }*/
+        when(restController.removePosition(Arrays.asList(positionDto))).thenReturn(new ResponseEntity(null, HttpStatus.OK));
+        assertEquals(200, restController.removePosition(Arrays.asList(positionDto)).getStatusCode().value());
+    }
 }

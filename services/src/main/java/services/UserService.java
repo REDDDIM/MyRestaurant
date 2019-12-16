@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
     User load(Long id);
-    User createNewUser(UserDto userDto);
+    UserDto createNewUser(UserDto userDto);
     UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception;
     User findByUsername(String login);
 

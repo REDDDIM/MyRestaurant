@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createNewUser(UserDto userDto) {
+    public UserDto createNewUser(UserDto userDto) {
         Role role = null;
         if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
             role = roleRepository.getByName(userDto.getRole().getName());
@@ -51,7 +51,8 @@ public class UserServiceImpl implements UserService {
         User user = converterService.convertToEntity(userDto, User.class);
         user.setPassword(encryptionService.encryptString(userDto.getPassword()));
         user.setRole(role);
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return converterService.convertToDto(user, UserDto.class);
     }
 
     @Override

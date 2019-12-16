@@ -1,5 +1,6 @@
 package config;
 
+import dto.ErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = Exception.class)
     protected ResponseEntity<Object> handleConflict(
             Exception ex, WebRequest request) {
-        String bodyOfResponse = "An error has occurred : ";
-        return handleExceptionInternal(ex, bodyOfResponse + ex.getMessage(),
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setErrorType(ex.getClass().toString());
+        errorDto.setMessage("An error has occurred : "+ex.getMessage());
+        return handleExceptionInternal(ex, errorDto,
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }
