@@ -23,6 +23,12 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
    @Autowired
     @Qualifier("daoAuthenticationProvider")
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
@@ -59,7 +65,9 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/order/setOrderToCourier").hasRole("admin")
                 .antMatchers("/order/getCourierOrders").hasRole("courier")
                 .and()
-                .httpBasic();
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+                .and()
+                .httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint);
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
         httpSecurity.addFilter(new BasicAuthenticationFilter(authenticationManager()));
