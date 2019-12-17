@@ -40,6 +40,6 @@ INSERT INTO public.role(
 	VALUES (10, 'Курьер', 'ROLE_courier');
 INSERT INTO public.users(
 	id, address, login, name, password, phone_number, surname, role_id)
-	VALUES (11, 'courier_address', 'courier', 'courier_name', 'lm2P5UhgPcJ8djmG2HnJWgG56mGzgz3x73BgN5QTVT4kwkVoiGzMgLoVI0ip2kB/', 0000000000, 'courier_surname', 13);
+	VALUES (11, 'courier_address', 'courier', 'courier_name', 'lm2P5UhgPcJ8djmG2HnJWgG56mGzgz3x73BgN5QTVT4kwkVoiGzMgLoVI0ip2kB/', 0000000000, 'courier_surname', 10);
 select setval('hibernate_sequence', 12);
 ALTER TABLE public.users ADD CONSTRAINT user_login_unique UNIQUE (login);
