@@ -1,5 +1,6 @@
 package entities;
 
+import enums.OrderStatusEnum;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
@@ -20,7 +21,8 @@ public class Order extends BaseEntity {
     private Date orderDate;
     private String address;
     private String phoneNumber;
-    private OrderStatus orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatusEnum orderStatus;
     private List<OrderItem> orderItems;
     private User courier;
 
@@ -68,13 +70,11 @@ public class Order extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "order_status_id")
-    public OrderStatus getOrderStatus() {
+    public OrderStatusEnum getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
     }
 

@@ -1,6 +1,9 @@
 package dto;
 
+import enums.OrderStatusEnum;
 import lombok.EqualsAndHashCode;
+
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class OrderDto extends BaseDto {
     private Date orderDate;
     private String address;
     private String phoneNumber;
-    private OrderStatusDto orderStatus;
+    private OrderStatusEnum orderStatus;
     private List<OrderItemDto> orderItems;
     private UserDto courier;
 
@@ -62,11 +65,12 @@ public class OrderDto extends BaseDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public OrderStatusDto getOrderStatus() {
+    @Column(name = "order_status")
+    public OrderStatusEnum getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatusDto orderStatus) {
+    public void setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
     }
 

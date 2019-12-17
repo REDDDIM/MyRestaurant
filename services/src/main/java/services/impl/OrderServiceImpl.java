@@ -1,11 +1,11 @@
 package services.impl;
 
 import dao.repository.OrderRepository;
-import dao.repository.OrderStatusRepository;
 import dao.repository.OrderTypeRepository;
 import dao.repository.UserRepository;
 import dto.OrderDto;
 import entities.*;
+import enums.OrderStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,6 @@ public class OrderServiceImpl implements OrderService {
     OrderTypeRepository orderTypeRepository;
 
     @Autowired
-    OrderStatusRepository orderStatusRepository;
-
-    @Autowired
     @Qualifier("orderConverter")
     BaseConverter<OrderDto, Order> converter;
 
@@ -44,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     public Order createOrder(OrderDto order){
         Order orderEntity = converter.convertToEntity(order);
         orderEntity.setUser(userRepository.findByLogin(order.getUser().getLogin()));
-        orderEntity.setOrderStatus(orderStatusRepository.getByName("new"));
+        orderEntity.setOrderStatus(OrderStatusEnum.NEW);
         orderEntity.setOrderType(orderTypeRepository.getByName(order.getOrderType().getName()));
         return orderRepository.save(orderEntity);
     }
@@ -59,17 +56,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void changeOrderStatus(Long orderId, String newStatusName) {
         Order order = orderRepository.getOne(orderId);
-        OrderStatus status = orderStatusRepository.getByName(newStatusName);
-        order.setOrderStatus(status);
+        order.setOrderStatus(OrderStatusEnum.valueOf(newStatusName.toUpperCase()));
         orderRepository.save(order);
     }
 
     @Override
     public void setOrderToCourier(Long courierId, Long orderId) {
         Order order = orderRepository.getOne(orderId);
-        OrderStatus newOrderStatus = orderStatusRepository.getByName("transferred_to_the_courier");
         User courier = userRepository.getOne(courierId);
-        order.setOrderStatus(newOrderStatus);
+        order.setOrderStatus(OrderStatusEnum.TRANSFERRED_TO_THE_COURIER);
         order.setCourier(courier);
         orderRepository.save(order);
     }

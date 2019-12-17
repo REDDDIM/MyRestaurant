@@ -32,9 +32,6 @@ public class UserServiceImpl implements UserService {
     OrderRepository orderRepository;
 
     @Autowired
-    OrderStatusRepository orderStatusRepository;
-
-    @Autowired
     @Qualifier("userConverter")
     BaseConverter<UserDto, User> converter;
 
