@@ -4,9 +4,10 @@ import dao.repository.PositionRepository;
 import dto.PositionDto;
 import entities.Position;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import services.ConverterService;
 import services.PositionService;
+import services.converter.BaseConverter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,20 +18,21 @@ public class PositionServiceImpl implements PositionService {
     private PositionRepository positionRepository;
 
     @Autowired
-    private ConverterService<PositionDto, Position> converterService;
+    @Qualifier("positionConverter")
+    private BaseConverter<PositionDto, Position> converter;
 
     @Override
     public List<PositionDto> getAll() {
         return positionRepository.findAll()
-                .stream().map(e -> converterService.convertToDto(e, PositionDto.class)).
+                .stream().map(e -> converter.convertToDto(e)).
                         collect(Collectors.toList());
     }
 
     @Override
     public PositionDto save(PositionDto positionDto) {
-        return converterService.convertToDto(
+        return converter.convertToDto(
                 positionRepository.save(
-                        converterService.convertToEntity(positionDto, Position.class)), PositionDto.class);
+                        converter.convertToEntity(positionDto)));
     }
 
     @Override

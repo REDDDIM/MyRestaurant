@@ -5,10 +5,11 @@ import dto.UserDto;
 import entities.Role;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import services.ConverterService;
 import services.EncryptionService;
 import services.UserService;
+import services.converter.BaseConverter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,8 @@ public class UserServiceImpl implements UserService {
     OrderStatusRepository orderStatusRepository;
 
     @Autowired
-    ConverterService<UserDto, User> converterService;
+    @Qualifier("userConverter")
+    BaseConverter<UserDto, User> converter;
 
 
     @Override
@@ -48,16 +50,16 @@ public class UserServiceImpl implements UserService {
         if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
             role = roleRepository.getByName(userDto.getRole().getName());
         }
-        User user = converterService.convertToEntity(userDto, User.class);
+        User user = converter.convertToEntity(userDto);
         user.setPassword(encryptionService.encryptString(userDto.getPassword()));
         user.setRole(role);
         user = userRepository.save(user);
-        return converterService.convertToDto(user, UserDto.class);
+        return converter.convertToDto(user);
     }
 
     @Override
     public UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception {
-        UserDto userDto = converterService.convertToDto(userRepository.findByLogin(login), UserDto.class);
+        UserDto userDto = converter.convertToDto(userRepository.findByLogin(login));
         if (userDto == null) throw new Exception("Пользователь не найден!");
         if (encryptionService.checkPassword(pwd, userDto.getPassword())){
             userDto.setPassword(pwd);
@@ -74,13 +76,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAll() {
         return userRepository.findAll().stream().
-                map(e -> converterService.convertToDto(e, UserDto.class)).collect(Collectors.toList());
+                map(e -> converter.convertToDto(e)).collect(Collectors.toList());
     }
 
     @Override
     public List<UserDto> getAllCouriers() {
         return userRepository.getAllCouries().stream().
-                map(e -> converterService.convertToDto(e, UserDto.class)).collect(Collectors.toList());
+                map(e -> converter.convertToDto(e)).collect(Collectors.toList());
     }
 
     @Override

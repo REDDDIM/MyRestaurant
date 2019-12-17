@@ -7,9 +7,10 @@ import dao.repository.UserRepository;
 import dto.OrderDto;
 import entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import services.ConverterService;
 import services.OrderService;
+import services.converter.BaseConverter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,18 +30,19 @@ public class OrderServiceImpl implements OrderService {
     OrderStatusRepository orderStatusRepository;
 
     @Autowired
-    ConverterService<OrderDto, Order> converterService;
+    @Qualifier("orderConverter")
+    BaseConverter<OrderDto, Order> converter;
 
     @Override
     public List<OrderDto> getOrdersForUser(Long userId) {
         return orderRepository.getByUserId(userId)
-                .stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
+                .stream().map(e -> converter.convertToDto(e)).
                         collect(Collectors.toList());
     }
 
     @Override
     public Order createOrder(OrderDto order){
-        Order orderEntity = converterService.convertToEntity(order, Order.class);
+        Order orderEntity = converter.convertToEntity(order);
         orderEntity.setUser(userRepository.findByLogin(order.getUser().getLogin()));
         orderEntity.setOrderStatus(orderStatusRepository.getByName("new"));
         orderEntity.setOrderType(orderTypeRepository.getByName(order.getOrderType().getName()));
@@ -50,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAll() {
         return orderRepository.findAll().
-                stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
+                stream().map(e -> converter.convertToDto(e)).
                 collect(Collectors.toList());
     }
 
@@ -75,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getCourierOrders(Long courierId) {
         return orderRepository.getCourierOrders(courierId).
-                stream().map(e -> converterService.convertToDto(e, OrderDto.class)).
+                stream().map(e -> converter.convertToDto(e)).
                 collect(Collectors.toList());
     }
 
