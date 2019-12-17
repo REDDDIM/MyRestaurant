@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
         if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
             role = roleRepository.getByName(userDto.getRole().getName());
         }
+        else role = roleRepository.getByName("ROLE_client");
         User user = converter.convertToEntity(userDto);
         user.setPassword(encryptionService.encryptString(userDto.getPassword()));
         user.setRole(role);
