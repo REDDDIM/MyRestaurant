@@ -1,5 +1,6 @@
 package services.impl;
 
+import dao.repository.OrderItemRepository;
 import dao.repository.PositionRepository;
 import dto.PositionDto;
 import entities.Position;
@@ -16,6 +17,9 @@ public class PositionServiceImpl implements PositionService {
 
     @Autowired
     private PositionRepository positionRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
     @Qualifier("positionConverter")
@@ -37,6 +41,9 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public void remove(List<PositionDto> positionDtos){
-        positionDtos.forEach(m -> positionRepository.delete(m.getId()));
+        positionDtos.forEach(m -> {
+            orderItemRepository.deletePositionFromOrderItem(m.getId());
+            positionRepository.delete(m.getId());
+        });
     }
 }
