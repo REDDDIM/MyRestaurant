@@ -26,15 +26,6 @@ INSERT INTO public.order_type(
 INSERT INTO public.order_type(
 	id, description, name)
 	VALUES (9, 'Доставка', 'courier_delivery');
-/*INSERT INTO public.order_status(
-	id, description, name)
-	VALUES (10, 'Новый', 'new');
-INSERT INTO public.order_status(
-	id, description, name)
-	VALUES (11, 'Передан курьеру', 'transferred_to_the_courier');
-INSERT INTO public.order_status(
-	id, description, name)
-	VALUES (12, 'Завершен', 'completed');*/
 INSERT INTO public.role(
 	id, description, name)
 	VALUES (10, 'Курьер', 'ROLE_courier');
