@@ -16,9 +16,9 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping("/getOrders")
-    public List<OrderDto> getOrders(@RequestParam("userId") String userId){
-        return orderService.getOrdersForUser(new Long(userId));
+    @GetMapping("/getOrders/{userId}")
+    public List<OrderDto> getOrders(@PathVariable("userId") Long userId){
+        return orderService.getOrdersForUser(userId);
     }
 
 
@@ -28,14 +28,15 @@ public class OrderController {
             return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @PostMapping("/getAllOrders")
+    @GetMapping("/getAllOrders")
     public List<OrderDto> getAllOrders(){
         return orderService.getAll();
     }
 
-    @PostMapping("/changeOrderStatus")
-    public ResponseEntity changeOrderStatus(@RequestParam("orderId") String orderId, @RequestParam("newStatusName") String newStatusName){
-        orderService.changeOrderStatus(new Long(orderId), newStatusName);
+
+    @PostMapping("/changeOrderStatus/{orderId}/complete")
+    public ResponseEntity completeOrder(@PathVariable("orderId") Long orderId){
+        orderService.changeOrderStatus(new Long(orderId), "complete");
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
@@ -45,8 +46,8 @@ public class OrderController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @PostMapping("/getCourierOrders")
-    public List<OrderDto> getCourierOrders(@RequestParam("courierId") String courierId){
-        return orderService.getCourierOrders(new Long(courierId));
+    @GetMapping("/getCourierOrders/{courierId}")
+    public List<OrderDto> getCourierOrders(@PathVariable("courierId") Long courierId){
+        return orderService.getCourierOrders(courierId);
     }
 }
