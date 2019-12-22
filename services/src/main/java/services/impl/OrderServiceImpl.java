@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import services.OrderService;
 import services.converter.BaseConverter;
+import services.exceptions.OrderException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +33,10 @@ public class OrderServiceImpl implements OrderService {
     BaseConverter<OrderDto, Order> converter;
 
     @Override
-    public List<OrderDto> getOrdersForUser(Long userId) {
-        return orderRepository.getByUserId(userId)
+    public List<OrderDto> getOrdersForUser(Long userId) throws OrderException {
+        List<Order> entities = orderRepository.getByUserId(userId);
+        if (entities.isEmpty()) throw new OrderException("Список заказов пуст!");
+        return entities
                 .stream().map(e -> converter.convertToDto(e)).
                         collect(Collectors.toList());
     }
@@ -70,8 +74,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getCourierOrders(Long courierId) {
-        return orderRepository.getCourierOrders(courierId).
+    public List<OrderDto> getCourierOrders(Long courierId) throws OrderException {
+        List<Order> entities = orderRepository.getCourierOrders(courierId);
+        if (entities.isEmpty()) throw new OrderException("Список заказов пуст!");
+        return entities.
                 stream().map(e -> converter.convertToDto(e)).
                 collect(Collectors.toList());
     }
@@ -80,6 +86,5 @@ public class OrderServiceImpl implements OrderService {
     public void remove(Long id) {
         orderRepository.delete(id);
     }
-
 
 }

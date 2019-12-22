@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import services.EncryptionService;
 import services.UserService;
 import services.converter.BaseConverter;
+import services.exceptions.UserException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createNewUser(UserDto userDto) {
+    public UserDto createNewUser(UserDto userDto) throws UserException {
         Role role = null;
         if (userDto.getRole() != null && !userDto.getRole().getName().isEmpty()){
             role = roleRepository.getByName(userDto.getRole().getName());
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encryptionService.encryptString(userDto.getPassword()));
         user.setRole(role);
         user = userRepository.save(user);
+        if (user == null) throw new UserException("Ошибка при создании пользователя!");
         return converter.convertToDto(user);
     }
 

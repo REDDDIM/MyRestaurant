@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import services.PositionService;
 import services.OrderService;
 import services.UserService;
+import services.exceptions.PositionException;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -34,7 +36,7 @@ public class ApplicationTest {
     UserService userService;
 
     @Test
-    public void testPosition(){
+    public void testPosition() throws PositionException {
         PositionDto positionDto = new PositionDto();
         positionDto.setTitle("test_title");
         positionDto.setIngredients("test_ingredients");

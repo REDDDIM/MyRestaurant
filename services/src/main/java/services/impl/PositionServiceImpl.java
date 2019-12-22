@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import services.PositionService;
 import services.converter.BaseConverter;
+import services.exceptions.PositionException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +28,10 @@ public class PositionServiceImpl implements PositionService {
     private BaseConverter<PositionDto, Position> converter;
 
     @Override
-    public List<PositionDto> getAll() {
-        return positionRepository.findAll()
+    public List<PositionDto> getAll() throws PositionException {
+        List<Position> entities = positionRepository.findAll();
+        if (entities.isEmpty()) throw new PositionException("Список позиций в меню пуст!");
+        return entities
                 .stream().map(e -> converter.convertToDto(e)).
                         collect(Collectors.toList());
     }

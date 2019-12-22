@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.PositionService;
+import services.exceptions.PositionException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class PositionController {
     PositionService positionService;
 
     @PostMapping("/allpositions")
-    public List<PositionDto> getAllPositions(){
+    public List<PositionDto> getAllPositions() throws PositionException {
         return positionService.getAll();
     }
 

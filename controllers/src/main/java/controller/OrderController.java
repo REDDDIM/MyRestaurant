@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.OrderService;
+import services.exceptions.OrderException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/getOrders/{userId}")
-    public List<OrderDto> getOrders(@PathVariable("userId") Long userId){
+    public List<OrderDto> getOrders(@PathVariable("userId") Long userId) throws OrderException {
         return orderService.getOrdersForUser(userId);
     }
 
@@ -47,7 +48,7 @@ public class OrderController {
     }
 
     @GetMapping("/getCourierOrders/{courierId}")
-    public List<OrderDto> getCourierOrders(@PathVariable("courierId") Long courierId){
+    public List<OrderDto> getCourierOrders(@PathVariable("courierId") Long courierId) throws OrderException {
         return orderService.getCourierOrders(courierId);
     }
 }
