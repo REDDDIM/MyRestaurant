@@ -34,9 +34,9 @@ public class OrderController {
     }
 
 
-    @PostMapping("/changeOrderStatus/{orderId}/complete")
+    @PostMapping("/changeOrderStatus/{orderId}/completed")
     public ResponseEntity completeOrder(@PathVariable("orderId") Long orderId){
-        orderService.changeOrderStatus(new Long(orderId), "complete");
+        orderService.changeOrderStatus(orderId, "completed");
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
