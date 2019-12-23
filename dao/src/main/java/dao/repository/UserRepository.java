@@ -28,5 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("FROM User WHERE role.name = 'ROLE_courier'")
     List<User> getAllCouries();
 
+    @Query("FROM User WHERE role.name = :role")
+    List<User> getByRole(@Param("role") String role);
+
 
 }

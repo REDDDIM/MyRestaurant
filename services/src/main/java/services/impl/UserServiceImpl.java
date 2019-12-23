@@ -91,6 +91,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDto> getByRole(String role) throws UserException {
+
+        return converter.convertToDto(userRepository.getByRole(role));
+    }
+
+    @Override
     public void remove(Long id) {
         userRepository.delete(id);
     }

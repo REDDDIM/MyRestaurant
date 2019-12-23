@@ -17,5 +17,7 @@ public interface UserService {
 
     List<UserDto> getAllCouriers() throws UserException;
 
+    List<UserDto> getByRole(String role) throws UserException;
+
     void remove(Long id);
 }

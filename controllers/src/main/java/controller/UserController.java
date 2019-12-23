@@ -2,9 +2,7 @@ package controller;
 
 import dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.UserService;
 import services.exceptions.UserException;
 
@@ -17,7 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/getAllUsers")
+    /*@PostMapping("/getAllUsers")
     public List<UserDto> getAllUsers() throws UserException {
         return userService.getAll();
     }
@@ -25,5 +23,15 @@ public class UserController {
     @PostMapping("/getAllCouriers")
     public List<UserDto> getAllCouriers() throws UserException {
         return userService.getAllCouriers();
+    }*/
+
+    @GetMapping("/users")
+    public List<UserDto> getUsers() throws UserException {
+        return userService.getAll();
+    }
+
+    @GetMapping("/users/{role}")
+    public List<UserDto> getUsers(@PathVariable(name = "role") String role) throws UserException {
+        return userService.getByRole(role);
     }
 }
