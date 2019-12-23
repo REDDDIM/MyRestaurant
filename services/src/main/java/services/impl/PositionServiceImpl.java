@@ -31,9 +31,7 @@ public class PositionServiceImpl implements PositionService {
     public List<PositionDto> getAll() throws PositionException {
         List<Position> entities = positionRepository.findAll();
         if (entities.isEmpty()) throw new PositionException("Список позиций в меню пуст!");
-        return entities
-                .stream().map(e -> converter.convertToDto(e)).
-                        collect(Collectors.toList());
+        return converter.convertToDto(entities);
     }
 
     @Override
