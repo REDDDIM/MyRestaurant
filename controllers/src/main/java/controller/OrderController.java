@@ -15,7 +15,7 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @GetMapping("/getOrders/{userId}")
     public List<OrderDto> getOrders(@PathVariable("userId") Long userId) throws OrderException {

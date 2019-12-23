@@ -22,16 +22,16 @@ public class UserServiceImpl implements UserService {
     private EncryptionService encryptionService;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    PositionRepository positionRepository;
+    private PositionRepository positionRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
     @Qualifier("userConverter")
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
             userDto.setPassword(pwd);
             return userDto;
         }
-        else throw new Exception("Неверный пароль!");
+        else throw new UserException("Неверный пароль!");
     }
 
     @Override
@@ -75,14 +75,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll() {
-        return userRepository.findAll().stream().
+    public List<UserDto> getAll() throws UserException {
+        List<User> entities = userRepository.findAll();
+        if (entities.isEmpty()) throw new UserException("Список пользователей пуст!");
+        return entities.stream().
                 map(e -> converter.convertToDto(e)).collect(Collectors.toList());
     }
 
     @Override
-    public List<UserDto> getAllCouriers() {
-        return userRepository.getAllCouries().stream().
+    public List<UserDto> getAllCouriers() throws UserException {
+        List<User> entities = userRepository.getAllCouries();
+        if (entities.isEmpty()) throw new UserException("Список курьеров пуст!");
+        return entities.stream().
                 map(e -> converter.convertToDto(e)).collect(Collectors.toList());
     }
 

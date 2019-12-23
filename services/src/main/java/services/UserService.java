@@ -13,9 +13,9 @@ public interface UserService {
     UserDto authorizeByLoginAndPassword(String login, String pwd) throws Exception;
     User findByUsername(String login);
 
-    List<UserDto> getAll();
+    List<UserDto> getAll() throws UserException;
 
-    List<UserDto> getAllCouriers();
+    List<UserDto> getAllCouriers() throws UserException;
 
     void remove(Long id);
 }

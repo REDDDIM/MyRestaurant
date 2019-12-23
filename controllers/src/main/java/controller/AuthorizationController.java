@@ -12,7 +12,7 @@ import services.UserService;
 public class AuthorizationController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping(value = "/login")
     public UserDto login(@RequestParam("login") String login,

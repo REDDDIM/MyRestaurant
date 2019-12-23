@@ -16,7 +16,7 @@ import java.util.List;
 public class PositionController {
 
     @Autowired
-    PositionService positionService;
+    private PositionService positionService;
 
     @PostMapping("/allpositions")
     public List<PositionDto> getAllPositions() throws PositionException {

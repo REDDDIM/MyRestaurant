@@ -20,17 +20,17 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    OrderTypeRepository orderTypeRepository;
+    private OrderTypeRepository orderTypeRepository;
 
     @Autowired
     @Qualifier("orderConverter")
-    BaseConverter<OrderDto, Order> converter;
+    private BaseConverter<OrderDto, Order> converter;
 
     @Override
     public List<OrderDto> getOrdersForUser(Long userId) throws OrderException {
