@@ -18,7 +18,7 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-    @PostMapping("/allpositions")
+    @GetMapping("/allpositions")
     public List<PositionDto> getAllPositions() throws PositionException {
         return positionService.getAll();
     }
