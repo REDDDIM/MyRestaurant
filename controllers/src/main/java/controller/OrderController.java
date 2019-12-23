@@ -17,10 +17,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/getOrders/{userId}")
+    /*@GetMapping("/getOrders/{userId}")
     public List<OrderDto> getOrders(@PathVariable("userId") Long userId) throws OrderException {
         return orderService.getOrdersForUser(userId);
-    }
+    }*/
 
 
     @PostMapping("/createOrder")
@@ -29,10 +29,10 @@ public class OrderController {
             return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllOrders")
+    /*@GetMapping("/getAllOrders")
     public List<OrderDto> getAllOrders() throws OrderException {
         return orderService.getAll();
-    }
+    }*/
 
 
     @PostMapping("/changeOrderStatus/{orderId}/completed")
@@ -47,8 +47,15 @@ public class OrderController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
-    @GetMapping("/getCourierOrders/{courierId}")
+    /*@GetMapping("/getCourierOrders/{courierId}")
     public List<OrderDto> getCourierOrders(@PathVariable("courierId") Long courierId) throws OrderException {
         return orderService.getCourierOrders(courierId);
+    }*/
+
+    @GetMapping("/getAll")
+    public List<OrderDto> getAll(@RequestParam(name = "userId", required = false) String userId, @RequestParam(name = "courierId", required = false) String courierId) throws OrderException {
+        if (userId!=null) return orderService.getOrdersForUser(new Long(userId));
+        if (courierId!= null) return orderService.getCourierOrders(new Long(courierId));
+        return orderService.getAll();
     }
 }
