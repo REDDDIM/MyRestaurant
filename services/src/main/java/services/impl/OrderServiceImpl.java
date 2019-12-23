@@ -36,18 +36,18 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getOrdersForUser(Long userId) throws OrderException {
         List<Order> entities = orderRepository.getByUserId(userId);
         if (entities.isEmpty()) throw new OrderException("Список заказов пуст!");
-        return entities
-                .stream().map(e -> converter.convertToDto(e)).
-                        collect(Collectors.toList());
+        return converter.convertToDto(entities);
     }
 
     @Override
-    public Order createOrder(OrderDto order){
+    public Order createOrder(OrderDto order) throws OrderException {
         Order orderEntity = converter.convertToEntity(order);
         orderEntity.setUser(userRepository.findByLogin(order.getUser().getLogin()));
         orderEntity.setOrderStatus(OrderStatusEnum.NEW);
         orderEntity.setOrderType(orderTypeRepository.getByName(order.getOrderType().getName()));
-        return orderRepository.save(orderEntity);
+        orderEntity = orderRepository.save(orderEntity);
+        if (orderEntity.getId() == null) throw new OrderException("Ошибка при создании заказа!");
+        return orderEntity;
     }
 
     @Override
@@ -79,9 +79,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getCourierOrders(Long courierId) throws OrderException {
         List<Order> entities = orderRepository.getCourierOrders(courierId);
         if (entities.isEmpty()) throw new OrderException("Список заказов пуст!");
-        return entities.
-                stream().map(e -> converter.convertToDto(e)).
-                collect(Collectors.toList());
+        return converter.convertToDto(entities);
     }
 
     @Override

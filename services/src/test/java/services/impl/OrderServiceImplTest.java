@@ -1,19 +1,20 @@
 package services.impl;
 
 import dao.repository.OrderRepository;
+import dao.repository.UserRepository;
 import dto.OrderDto;
+import dto.UserDto;
 import entities.Order;
 import entities.User;
 import enums.OrderStatusEnum;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import services.OrderService;
-import services.converter.BaseConverter;
 import services.converter.impl.OrderConverter;
 import services.exceptions.OrderException;
 
@@ -22,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,17 +38,28 @@ public class OrderServiceImplTest {
     @Mock
     OrderRepository orderRepository;
 
+    @Mock
+    UserRepository userRepository;
+
     List<Order> expectedOrders;
     List<OrderDto> expectedOrdersDto;
     Order expectedOrder;
+    OrderDto expectedOrderDto;
+    User client;
+    UserDto clientDto;
 
     @Before
     public void setUp() {
+        OrderConverter converter = new OrderConverter();
+        client = new User();
+        client.setLogin("client");
         expectedOrder = new Order();
         expectedOrder.setAddress("expected_address");
         expectedOrder.setOrderDate(new Date());
         expectedOrder.setOrderStatus(OrderStatusEnum.NEW);
         expectedOrder.setPhoneNumber("1234567890");
+        expectedOrder.setUser(client);
+        expectedOrderDto = converter.convertToDto(expectedOrder);
         expectedOrders = new ArrayList<>();
         Order firstExpectedOrder = new Order();
         firstExpectedOrder.setAddress("first_expected_address");
@@ -73,6 +85,7 @@ public class OrderServiceImplTest {
 
     @Test
     public void returnExpectedOrders() throws OrderException {
+        when(converter.convertToDto(expectedOrders)).thenReturn(expectedOrdersDto);
         when(orderRepository.getByUserId(anyLong())).thenReturn(expectedOrders);
         assertEquals(orderService.getOrdersForUser(new Long(1)), expectedOrdersDto);
         when(orderRepository.getCourierOrders(anyLong())).thenReturn(expectedOrders);
