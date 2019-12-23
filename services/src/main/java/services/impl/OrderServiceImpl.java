@@ -51,8 +51,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAll() {
-        return orderRepository.findAll().
+    public List<OrderDto> getAll() throws OrderException {
+        List<Order> entities = orderRepository.findAll();
+        if (entities.isEmpty()) throw new OrderException("Список заказов пуст!");
+        return entities.
                 stream().map(e -> converter.convertToDto(e)).
                 collect(Collectors.toList());
     }

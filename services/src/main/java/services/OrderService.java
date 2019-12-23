@@ -12,7 +12,7 @@ public interface OrderService {
 
     Order createOrder(OrderDto order);
 
-    List<OrderDto> getAll();
+    List<OrderDto> getAll() throws OrderException;
 
     void changeOrderStatus(Long orderId, String newStatusName);
 
