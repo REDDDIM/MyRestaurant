@@ -17,6 +17,7 @@ import services.PositionService;
 import services.OrderService;
 import services.UserService;
 import services.exceptions.PositionException;
+import services.exceptions.UserException;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void userTest(){
+    public void userTest() throws UserException {
         UserDto userDto = new UserDto();
         userDto.setName("test_name");
         userDto.setSurname("test_surname");
