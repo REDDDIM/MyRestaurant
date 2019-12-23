@@ -24,13 +24,13 @@ public class OrderController {
 
 
     @PostMapping("/createOrder")
-    public ResponseEntity createOrder(@RequestBody OrderDto order){
+    public ResponseEntity createOrder(@RequestBody OrderDto order) throws OrderException {
             orderService.createOrder(order);
             return new ResponseEntity(null, HttpStatus.OK);
     }
 
     @GetMapping("/getAllOrders")
-    public List<OrderDto> getAllOrders(){
+    public List<OrderDto> getAllOrders() throws OrderException {
         return orderService.getAll();
     }
 
