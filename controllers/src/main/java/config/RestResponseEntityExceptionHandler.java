@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import services.exceptions.OrderException;
 import services.exceptions.PositionException;
@@ -23,6 +24,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         errorDto.setMessage("An error has occurred : "+ex.getMessage());
         return handleExceptionInternal(ex, errorDto,
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> handleError404(Exception ex, WebRequest request)   {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setErrorType(ex.getClass().toString());
+        errorDto.setMessage("An error has occurred : "+ex.getMessage());
+        return handleExceptionInternal(ex, errorDto,
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = PositionException.class)
